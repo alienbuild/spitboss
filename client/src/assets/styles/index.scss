@@ -1,0 +1,20 @@
+.countdown-danger{ color: red; font-weight: bold; }
+
+html, body{
+}
+
+svg{
+  display: block;
+  width: 200px;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  position:absolute;
+
+}
+
+path{
+  stroke-linecap: square;
+  stroke: white;
+  stroke-width: 0.5px;
+}
