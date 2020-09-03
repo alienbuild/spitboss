@@ -1,4 +1,5 @@
 import {API} from '../config';
+import {getUser, signOutUser} from "../actions/userActions";
 
 // Handle user signup
 export const signup = (user) => {
@@ -70,6 +71,7 @@ export const signin = (user) => {
 
 // Authenticate
 export const authenticate = (data, next) => {
+    getUser(JSON.stringify(data));
     if (typeof window !== 'undefined'){
         localStorage.setItem('jwt', JSON.stringify(data));
         next();

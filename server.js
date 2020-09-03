@@ -15,13 +15,12 @@ const userRoutes = require('./routes/user');
 // Init app
 const app = express();
 const port = process.env.PORT || 5000;
-//const server = http.createServer(app);
 const server = app.listen(3000);
 const io = require('socket.io').listen(server);
 const users = new Users();
 
 // Init middleware
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({credentials: true, origin: 'http://localhost:3001'}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(expressValidator());

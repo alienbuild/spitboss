@@ -1,4 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import io from "socket.io-client";
 import SocketContext from '../../context/socketContext';
@@ -6,6 +7,7 @@ import SocketContext from '../../context/socketContext';
 // Components
 import UserList from './UserList';
 import Visualiser from "./Visualiser";
+import Default from "../../layouts/Default";
 
 // Define socket
 const socket = io('http://localhost:3000',{
@@ -56,6 +58,10 @@ const Spitbox = () => {
     });
     const [voteBtn, setVoteBtn] = useState(false);
 
+    // Grab state from redux store
+    const username = useSelector(state => state.user.user.user.name);
+    console.log('Redux data is: ', username);
+
     useEffect(() => {
         // On connect
         socket.on('connect', () => {
@@ -63,14 +69,13 @@ const Spitbox = () => {
         });
 
         socket.emit('join', {
-            user: 'john',
+            user: username,
             room: 'general'
         });
     }, []);
 
     // Control message input
     const handleChange = (e) => {
-        console.log(e.target.value);
         setMessage(e.target.value)
     };
 
@@ -92,6 +97,7 @@ const Spitbox = () => {
 
     // Event Request: Coin flip
     const coinFlip = (e) => {
+        console.log('requested flip');
         e.preventDefault();
         socket.emit('flip');
     };
@@ -157,7 +163,7 @@ const Spitbox = () => {
     };
 
     return(
-        <>
+        <Default>
             <UserList socket={socket}/>
             <main>
                 <span id="timer"></span>
@@ -175,20 +181,15 @@ const Spitbox = () => {
                         />
                         <button type="submit">Send</button>
                     </form>
-                    <button id="coin-flip" onClick={coinFlip}>Flip</button>
+                    <button id="coin-flip" onClick={(e) => coinFlip(e)}>Flip</button>
                     <button onClick={startBattle}>Start Battle</button>
                     {voteBtn ? <button onClick={(e) => submitVote('Canibus')}>Cast vote</button> : null}
-                    <Visualiser/>
+                    {/*<Visualiser/>*/}
                 </footer>
             </main>
-        </>
+        </Default>
     )
 };
 
-const ChatWithSocket = props => (
-    <SocketContext.Consumer>
-        {socket => <Spitbox {...props} socket={socket} />}
-    </SocketContext.Consumer>
-);
 
-export default ChatWithSocket;
+export default Spitbox;

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 // Layout and method imports
@@ -9,8 +10,12 @@ import { signin, authenticate, isAuthenticated } from "../auth";
 import Alert from "react-bootstrap/cjs/Alert";
 import Form from 'react-bootstrap/cjs/Form';
 import Button from 'react-bootstrap/cjs/Button';
+import {getUser} from "../actions/userActions";
 
 const Signin = ({setAlert, removeAlert, alerts}) => {
+
+    // Ready dispatch
+    const dispatch = useDispatch();
 
     // Init state
     const [values, setValues] = useState({
@@ -36,13 +41,16 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
     // Handle form submit
     const clickSubmit = (e) => {
         e.preventDefault();
+
         setValues({...values, error: false, loading: true});
         signin({email, password})
             .then(data => {
+                console.log('data is', data);
                 if (data.error){
-                    setAlert(data.error, 'danger');
+                    //setAlert(data.error, 'danger');
                     setValues({...values, loading: false})
                 } else {
+                    dispatch(getUser(data));
                     authenticate(data, () => {
                         setValues({...values, redirectToReferrer: true})
                     });
