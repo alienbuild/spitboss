@@ -2,12 +2,9 @@ import React, {Component, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import io from "socket.io-client";
-import SocketContext from '../../context/socketContext';
 
 // Components
-import UserList from './UserList';
-import Visualiser from "./Visualiser";
-import Default from "../../layouts/Default";
+import SpitboxTemplate from "../../layouts/spitbox/SpitboxTemplate";
 
 // Define socket
 const socket = io('http://localhost:3000',{
@@ -21,12 +18,24 @@ socket.on('disconnect', () => {
 
 // Event: New messages from the server
 socket.on('newMessage', (message) => {
+
     // Format the timestamp
     const time = moment(message.createdAt).format('h:mm a');
     // Grab dialog box
     const messages = document.querySelector('#messages');
     // Set the template
-    const output = `<li><time>${time}</time> <span class="dialog-username">${message.from}</span>: ${message.text}</li>`;
+    const output = `
+    <li class="foreign">
+        <div class="avatar">
+            <div class="status online"></div>
+        </div>
+        <div class="message-bubble">
+            <div class="username">${message.from}</div>
+            <div class="message">
+                ${message.text}
+            </div>
+        </div>
+    </li>`;
     // Output the message
     messages.insertAdjacentHTML("beforeend", output);
     // Autoscroll
@@ -163,9 +172,7 @@ const Spitbox = () => {
     };
 
     return(
-        <Default>
-            <UserList socket={socket}/>
-            <main>
+        <SpitboxTemplate>
                 <span id="timer"></span>
                 <ol id="messages"></ol>
                 <footer>
@@ -179,15 +186,22 @@ const Spitbox = () => {
                             autoComplete="off"
                             autoFocus="on"
                         />
-                        <button type="submit">Send</button>
+                        <button type="submit" id={`send-message`} disabled={message ? false : true}>
+
+                            <lord-icon
+                                animation="loop"
+                                palette="#433a55;#433a55"
+                                target="a"
+                                size={'10px'}
+                                src={`../../assets/icons/143-paper-plane/143-paper-plane-outline.json`}>
+                            </lord-icon>
+                        </button>
                     </form>
                     <button id="coin-flip" onClick={(e) => coinFlip(e)}>Flip</button>
                     <button onClick={startBattle}>Start Battle</button>
                     {voteBtn ? <button onClick={(e) => submitVote('Canibus')}>Cast vote</button> : null}
-                    {/*<Visualiser/>*/}
                 </footer>
-            </main>
-        </Default>
+        </SpitboxTemplate>
     )
 };
 

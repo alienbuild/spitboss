@@ -1,0 +1,257 @@
+.mk-test{
+  font-family: 'Fighting-Spirit-TBS';
+  position: absolute;
+  font-size: 130px;
+  vertical-align: middle;
+  width: 500px;
+  height: 200px;
+  top: 50%;
+  margin-top: -100px;
+  left: 50%;
+  margin-left: -250px;
+  color: $red;
+  text-shadow: 10px 5px 0px #000;
+}
+
+// Temp background colours
+.grid-item-1{
+  background: lighten( $dark-background, 10%);
+}
+.grid-item-2{
+  background: darken( $dark-background, 2%);
+}
+
+// Grid container
+#primary-grid{
+  width: 100%;
+  display: grid;
+  //grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 100vh;
+}
+
+#feed-container{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 100%;
+  position: relative;
+}
+
+#aside-grid{
+  display: grid;
+  grid-template-rows: 60px calc(100vh - 60px);
+  border-left: 1px solid #000;
+  header{
+    background: $light-background;
+    font-size: 12px;
+    padding: 10px 20px;
+    position: relative;
+    #logo{
+      position: absolute;
+      right: 10px;
+      z-index: 100;
+      width: 180px;
+    }
+    h1{
+      line-height: 24px;
+      font-size: 14px;
+      margin: 0;
+      color: $light-text;
+    }
+    ul{
+      padding: 0;
+      margin: 0;
+      li{
+        display: inline-block;
+        color: $text;
+        font-size: 12px;
+        line-height: 12px;
+        border-right: 1px solid $text;
+        padding-right: 10px;
+        margin-left: 10px;
+        &:first-child{ margin-left: 0; }
+        &:last-child{ border-right: none; padding-right: 0; }
+        strong{
+          color: $light-text;
+        }
+      }
+    }
+  }
+
+  #aside-nav-grid{
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    #chat-messages{
+      height: 100%;
+      padding: 10px;
+      overflow: hidden;
+      /* width */
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: $dark-background;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: $light-background;
+        border-radius: 30px;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: lighten($light-background, 2%);
+      }
+      ol{
+        height: calc(100% - 60px);
+        padding-bottom: 20px;
+        overflow: auto;
+        padding-right: 5px;
+        li{
+          margin-bottom: 10px;
+          position: relative;
+          padding: 10px 10px 0px 0px;
+          color: #d3d1d6;
+          font-size: 12px;
+          &:after{ clear: both; content:""; display: block; }
+          .message-bubble{
+            background: #4e4e4e;
+            border-radius: 10px;
+            padding: 5px;
+            margin-left: 25px;
+            padding-left: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 80%;
+            .username{
+              font-weight: bold;
+              color: #fff;
+            }
+            .message{
+
+            }
+          }
+          .avatar{
+            border: 5px solid $dark-background;
+            border-radius: 50%;
+            background: $light-background;
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            .status{
+              height: 12px;
+              width: 12px;
+              background: green;
+              border-radius: 50%;
+              position: absolute;
+              right: -2px;
+              bottom: -2px;
+              border: 2px solid $dark-background;
+            }
+          }
+          &.foreign{
+            .avatar{
+              left: 0;
+              right: auto;
+            }
+
+          }
+          &.domestic{
+            .message-bubble{
+              float: right;
+              background: $light-background;
+            }
+            .avatar{
+              right: 0;
+              left: auto;
+            }
+          }
+          &.spitboss{
+            .username{color: #000;}
+            .avatar{
+              position: relative;
+              height: auto;
+              width: auto;
+              background: transparent;
+              img{
+                position: absolute;
+                top: -10px;
+                left: -5px;
+                width: 80px;
+              }
+            }
+            .message-bubble{
+              background: #fecb47;
+              color: #000;
+            }
+            .avatar{
+              height: 40px;
+              width: 40px;
+            }
+          }
+        }
+      }
+      form{
+        height: 60px;
+        padding-top: 20px;
+        position: relative;
+        input[type="text"]{
+          margin: 0;
+          padding: 0;
+          border: 1px solid $light-background;
+          background: transparent;
+          border-radius: 50px;
+          padding: 10px;
+          width: 100%;
+          color: $text;
+          transition: 0.6s all;
+          &:focus, &:hover{
+            outline: none;
+            background: lighten($dark-background, 3%);
+            transition: 0.3s all;
+          }
+        }
+        button[type="submit"]{
+          border: none;
+          height: 40px;
+          width: 60px;
+          background: none;
+          position: absolute;
+          top: 15px;
+          right: 10px;
+          cursor: pointer;
+          lord-icon{
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+    aside{
+      border-left: 1px solid $light-background;
+      padding-top: 100px;
+      text-align: center;
+      nav{
+        ul{
+          li{
+            a{
+              background: lighten($dark-background, 10%);
+              border-bottom: 3px solid $light-background;
+              display: block;
+              lord-icon{
+                height: 90px;
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

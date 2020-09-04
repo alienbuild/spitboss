@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 // Layout and method imports
-import Default from '../layouts/Default';
+import Default from '../layouts/default/Default';
 import { signin, authenticate, isAuthenticated } from "../auth";
 
 // Bootstrap imports

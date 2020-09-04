@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { Link, withRouter, Redirect } from 'react-router-dom';
-import {isAuthenticated, signout} from "../../auth";
-import {signOutUser} from "../../actions/userActions";
+import {isAuthenticated, signout} from "../../../auth";
+import {signOutUser} from "../../../actions/userActions";
 import {useDispatch} from "react-redux";
 
 const Header = ({ title, description, history }) => {

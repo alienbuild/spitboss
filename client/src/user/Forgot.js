@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 // Layout and method imports
-import Default from '../layouts/Default';
+import Default from '../layouts/default/Default';
 
 // Bootstrap imports
 import Form from "react-bootstrap/Form";

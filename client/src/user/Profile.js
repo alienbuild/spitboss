@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, Redirect } from "react-router-dom";
-import Default from '../layouts/Default';
+import Default from '../layouts/default/Default';
 import { isAuthenticated } from "../auth";
 import { read, update, updateUser } from "./apiUser";
 

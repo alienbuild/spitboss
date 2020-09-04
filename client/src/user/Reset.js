@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import jwt from 'jsonwebtoken';
 
 // Layout and method imports
-import Default from '../layouts/Default';
+import Default from '../layouts/default/Default';
 
 // Bootstrap imports
 import Form from "react-bootstrap/Form";

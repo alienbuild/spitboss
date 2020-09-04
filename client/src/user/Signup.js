@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import Default from '../layouts/Default';
+import Default from '../layouts/default/Default';
 import { signup } from "../auth";
 
 const Signup = () => {

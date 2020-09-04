@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
             io.to(params.room).emit('updateUserList', users.getUserList(params.room));
         });
         // Welcome user
-        io.to(params.room).emit('newMessage', generateMessage('passthe40', 'Welcome to Pass the 40.'));
+        io.to(params.room).emit('newMessage', generateMessage('Spitboss', 'Welcome to Spitboss.'));
         // Announce user
         socket.broadcast.to(params.room).emit('newMessage', generateMessage('passthe40', `${params.user} has joined.`));
         //callback();
