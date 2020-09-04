@@ -1,9 +1,10 @@
 const moment = require('moment');
 
-const generateMessage = (from, text) => {
+const generateMessage = (from, text, socketId) => {
     return {
         from,
         text,
+        socketId,
         createdAt: moment().valueOf()
     };
 };

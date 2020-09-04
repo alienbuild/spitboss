@@ -43,9 +43,18 @@ app.use('/api', userRoutes);
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    // Send socket id back
+    socket.emit("socketId", socket.id);
+
     // Join
     socket.on('join', (params, callback) => {
         console.log('join params are: ', params);
+
+        // Send poll test
+        socket.emit('news', { hello: 'world' }, function(res) {
+            console.log(res);
+        });
+
         // REMINDER: Write validation!
         socket.join(params.room);
         console.log(`${params.user} joined ${params.room}`);
@@ -60,9 +69,9 @@ io.on('connection', (socket) => {
             io.to(params.room).emit('updateUserList', users.getUserList(params.room));
         });
         // Welcome user
-        io.to(params.room).emit('newMessage', generateMessage('Spitboss', 'Welcome to Spitboss.'));
+        io.to(socket.id).emit('newMessage', generateMessage('Spitboss', 'Welcome to Spitboss.', 'admin'));
         // Announce user
-        socket.broadcast.to(params.room).emit('newMessage', generateMessage('passthe40', `${params.user} has joined.`));
+        socket.broadcast.to(params.room).emit('newMessage', generateMessage('passthe40', `${params.user} has joined.`, socket.id));
         //callback();
     });
 
@@ -73,7 +82,7 @@ io.on('connection', (socket) => {
         // REMINDER: Add validation for empty messages and spam preventation.
         // ie: if user and not string/empty
         if (user) {
-            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text, socket.id));
         }
         callback();
     });

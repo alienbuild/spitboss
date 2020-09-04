@@ -1,65 +1,16 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import moment from 'moment';
 import io from "socket.io-client";
 
 // Components
 import SpitboxTemplate from "../../layouts/spitbox/SpitboxTemplate";
-
-// Define socket
-const socket = io('http://localhost:3000',{
-    forceNew: false
-});
-
-// On disconnect
-socket.on('disconnect', () => {
-    console.log('Disconnected from the server.');
-});
-
-// Event: New messages from the server
-socket.on('newMessage', (message) => {
-
-    // Format the timestamp
-    const time = moment(message.createdAt).format('h:mm a');
-    // Grab dialog box
-    const messages = document.querySelector('#messages');
-    // Set the template
-    const output = `
-    <li class="foreign">
-        <div class="avatar">
-            <div class="status online"></div>
-        </div>
-        <div class="message-bubble">
-            <div class="username">${message.from}</div>
-            <div class="message">
-                ${message.text}
-            </div>
-        </div>
-    </li>`;
-    // Output the message
-    messages.insertAdjacentHTML("beforeend", output);
-    // Autoscroll
-    autoscroll();
-});
-
-// Autoscroll
-const autoscroll = () => {
-    // Selectors
-    const messages = document.querySelector('#messages');
-    const allowance = messages.lastChild;
-    // Heights
-    const clientHeight = messages.clientHeight;
-    const scrollTop = messages.scrollTop;
-    const scrollHeight = messages.scrollHeight;
-    // If the user is near the bottom, auto scroll to bottom.
-    if (clientHeight + scrollTop + allowance.clientHeight * 4 >= scrollHeight) {
-        messages.scrollTop = scrollHeight;
-    }
-};
+import MessageBubble from "./MessageBubble";
 
 const Spitbox = () => {
 
     // Init state
+    const [yourID, setYourID] = useState();
+    const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [battleTimer, setBattleTimer] = useState({
         started: false,
@@ -71,17 +22,92 @@ const Spitbox = () => {
     const username = useSelector(state => state.user.user.user.name);
     console.log('Redux data is: ', username);
 
+    // Create socket ref
+    const socket = useRef();
+
     useEffect(() => {
-        // On connect
-        socket.on('connect', () => {
-            console.log('Connected to the server.');
+        // Connect to socket io
+        socket.current = io.connect('http://localhost:3000');
+
+        // Grab socket ID
+        socket.current.on("socketId", socketId => {
+            setYourID(socketId);
         });
 
-        socket.emit('join', {
+        // Event: New messages from the server
+        socket.current.on('newMessage', (message) => {
+            receivedMessage(message);
+            // Autoscroll
+            autoscroll();
+        });
+
+        // Join room 'General' for now. TODO: Make dynamic room joins
+        socket.current.emit('join', {
             user: username,
             room: 'general'
         });
+
+        // Question/Poll test
+        socket.current.on('news', function (data, ack) {
+            console.log(data);
+            if(ack){
+                ack("acknowledge from client");
+            }
+        });
+
+        // Start Voting
+        socket.current.on('votingOpen', () => {
+            console.log('Voting has started.');
+            setVoteBtn(true);
+        });
+
+        // Close voting
+        socket.current.on('votingClosed', () => {
+            setVoteBtn(false);
+        });
+
+        socket.current.on('startBattle', (result) => {
+            // Update the counter
+            setBattleTimer({
+                started: true,
+                count: result.result
+            });
+            if (result.result){
+                startTimer()
+            }
+        });
+
+        // Event: Coin flip
+        socket.current.on('coinFlip', (result) => {
+            // Grab dialog box
+            const messages = document.querySelector('#messages');
+            // Set the template
+            const output = `<li class="message broadcast">${result.result}</li>`;
+            // Output the result
+            messages.insertAdjacentHTML("beforeend", output);
+        });
+
+
     }, []);
+
+    const receivedMessage = (message) => {
+        setMessages(oldMsgs => [...oldMsgs, message]);
+    };
+
+    // Autoscroll to bottom of chat messages
+    const autoscroll = () => {
+        // Selectors
+        const messages = document.querySelector('#messages');
+        const allowance = messages.lastChild;
+        // Heights
+        const clientHeight = messages.clientHeight;
+        const scrollTop = messages.scrollTop;
+        const scrollHeight = messages.scrollHeight;
+        // If the user is near the bottom, auto scroll to bottom.
+        if (clientHeight + scrollTop + allowance.clientHeight * 4 >= scrollHeight) {
+            messages.scrollTop = scrollHeight;
+        }
+    };
 
     // Control message input
     const handleChange = (e) => {
@@ -97,7 +123,7 @@ const Spitbox = () => {
         // Clear the state
         setMessage('');
         // Event: Send message
-        socket.emit('createMessage',{
+        socket.current.emit('createMessage',{
             text: message
         }, () => {
             console.log('ok some call back here.');
@@ -108,37 +134,16 @@ const Spitbox = () => {
     const coinFlip = (e) => {
         console.log('requested flip');
         e.preventDefault();
-        socket.emit('flip');
+        socket.current.emit('flip');
     };
-
-    // Event: Coin flip
-    socket.on('coinFlip', (result) => {
-        // Grab dialog box
-        const messages = document.querySelector('#messages');
-        // Set the template
-        const output = `<li class="message broadcast">${result.result}</li>`;
-        // Output the result
-        messages.insertAdjacentHTML("beforeend", output);
-    });
 
     // Event Request: Start battle
     const startBattle = (e) => {
         e.preventDefault();
-        socket.emit('startBattle');
+        socket.current.emit('startBattle');
     };
 
     // Event: Start Battle
-    socket.on('startBattle', (result) => {
-        // Update the counter
-        setBattleTimer({
-            started: true,
-            count: result.result
-        });
-        if (result.result){
-            startTimer()
-        }
-    });
-
     // Timer
     const startTimer = () => {
         let counter = 30;
@@ -151,30 +156,22 @@ const Spitbox = () => {
             }
             if(counter < 0){
                 clearInterval(startBattleRap);
-                socket.emit('startVote');
+                socket.current.emit('startVote');
             }
         }, 1000)
     };
 
-    // Start Voting
-    socket.on('votingOpen', () => {
-        console.log('Voting has started.');
-        setVoteBtn(true);
-    });
-
-    // Close voting
-    socket.on('votingClosed', () => {
-        setVoteBtn(false);
-    });
-
+    // Handle vote
     const submitVote = (vote) => {
-      socket.emit('vote', vote);
+      socket.current.emit('vote', vote);
     };
 
     return(
         <SpitboxTemplate>
                 <span id="timer"></span>
-                <ol id="messages"></ol>
+                <ol id="messages">
+                    {messages && messages.map((message, index) => (<MessageBubble message={message} index={index} yourID={yourID} />))}
+                </ol>
                 <footer>
                     <form onSubmit={handleSubmit}>
                         <input
@@ -186,7 +183,7 @@ const Spitbox = () => {
                             autoComplete="off"
                             autoFocus="on"
                         />
-                        <button type="submit" id={`send-message`} disabled={message ? false : true}>
+                        <button type="submit" id={`send-message`} disabled={!message}>
 
                             <lord-icon
                                 animation="loop"

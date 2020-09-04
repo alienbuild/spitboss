@@ -130,6 +130,14 @@
             .username{
               font-weight: bold;
               color: #fff;
+              button{
+                color: #fff;
+                padding: 0;
+                border: none;
+                background: none;
+                font-weight: bold;
+                cursor: pointer;
+              }
             }
             .message{
 
@@ -173,7 +181,12 @@
             }
           }
           &.spitboss{
-            .username{color: #000;}
+            .username{
+              color: #000;
+              button{
+                color: #000;
+              }
+            }
             .avatar{
               position: relative;
               height: auto;
