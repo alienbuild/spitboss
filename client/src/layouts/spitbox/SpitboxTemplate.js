@@ -1,27 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import SpitbossLogo from '../../assets/images/spitboss.svg';
 
 import { loadAnimation } from 'lottie-web';
 import { defineLordIconElement } from 'lord-icon-element';
+import GameAnnouncer from "../../Components/Spitbox/GameAnnouncer";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
 
-const SpitboxTemplate = ({children}) => (
-    <>
+const SpitboxTemplate = ({children, socket}) => {
+
+    // Init state
+    const [watchers, setWatchers] = useState(0);
+
+    if (socket.current){
+        socket.current.on('updateUserList', (users) => {
+            setWatchers(users.length);
+        })
+    }
+
+    return(
+        <>
         <div id="primary-grid">
             <div id="feed-container">
-                <div className="mk-test">Round 1</div>
+                <GameAnnouncer socket={socket}/>
                 <div className="grid-item grid-item-1">WebRTC #1</div>
                 <div className="grid-item grid-item-2">WebRTC #2</div>
             </div>
 
             <div id="aside-grid">
                 <header>
-                    <img src={SpitbossLogo} id={`logo`} />
+                    <img src={SpitbossLogo} id={`logo`}/>
                     <h1>#canibusvsdizaster</h1>
                     <ul>
-                        <li>145</li>
+                        <li>{watchers}</li>
                         <li>Mode <strong>Pass the 40</strong></li>
                     </ul>
                 </header>
@@ -51,6 +63,7 @@ const SpitboxTemplate = ({children}) => (
 
         </div>
     </>
-);
+    )
+};
 
 export default SpitboxTemplate;

@@ -1,9 +1,9 @@
 import SpitbossLogo from "../../assets/images/spitboss.svg";
 import React from "react";
+import ReactEmoji from 'react-emoji';
+import ReactAutolink from 'react-autolink';
 
 const MessageBubble = (message, index, yourID) => {
-
-    console.log('Message is: ', message);
 
     const messageClick = (socketRequest) => {
         console.log('User wants to message or view profile of ' + socketRequest);
@@ -13,13 +13,13 @@ const MessageBubble = (message, index, yourID) => {
         <li
             key={index}
             className={`
-                                ${message.message.socketId === yourID ? 'domestic' : 'foreign'}
-                                ${message.message.socketId === 'admin' ? 'spitboss' : null}
-                                `}
+                ${message.message.socketId === yourID ? 'domestic' : 'foreign'}
+                ${message.message.socketId === 'admin' ? 'spitboss' : null}
+                `}
         >
             <div className="avatar">
-                <div className="status online"></div>
-                {message.message.socketId === 'admin' ? <img src={SpitbossLogo} /> : null}
+                <span className="status online"></span>
+                {message.message.socketId === 'admin' ? <img src={SpitbossLogo} alt={`Spitboss`} /> : null}
             </div>
             <div className="message-bubble">
                 <div className="username">
@@ -28,7 +28,19 @@ const MessageBubble = (message, index, yourID) => {
                     </button>
                 </div>
                 <div className="message">
-                    {message.message.text}
+                    {
+                        ReactAutolink.autolink(message.message.text, { target: "_blank", rel: "nofollow" }).map(el => {
+                            if (typeof el === "string"){
+                                return ReactEmoji.emojify(el, {
+                                    attributes: {
+                                        className: 'spitbox-emoji'
+                                    }
+                                });
+                            } else { 
+                                return el;
+                            }
+                        })
+                    }
                 </div>
             </div>
         </li>

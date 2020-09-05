@@ -11,6 +11,7 @@ require('dotenv').config();
 // Import: Routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const spitboxRoutes = require('./routes/spitbox');
 
 // Init app
 const app = express();
@@ -38,6 +39,7 @@ mongoose.connection.on('error', err => {  console.log(`DB connection error: ${er
 // Define routes
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
+app.use('/api', spitboxRoutes);
 
 // New connection
 io.on('connection', (socket) => {
@@ -130,6 +132,7 @@ io.on('connection', (socket) => {
 
     // Start battle
     socket.on('startBattle', () => {
+        console.log('Starting battle');
         const user = users.getUser(socket.id);
         io.to(user.room).emit('startBattle', { result: true });
     })

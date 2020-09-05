@@ -12,10 +12,6 @@ const Spitbox = () => {
     const [yourID, setYourID] = useState();
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
-    const [battleTimer, setBattleTimer] = useState({
-        started: false,
-        count: 0
-    });
     const [voteBtn, setVoteBtn] = useState(false);
 
     // Grab state from redux store
@@ -46,6 +42,8 @@ const Spitbox = () => {
             user: username,
             room: 'general'
         });
+        console.log('My username is: ', username);
+
 
         // Question/Poll test
         socket.current.on('news', function (data, ack) {
@@ -64,17 +62,6 @@ const Spitbox = () => {
         // Close voting
         socket.current.on('votingClosed', () => {
             setVoteBtn(false);
-        });
-
-        socket.current.on('startBattle', (result) => {
-            // Update the counter
-            setBattleTimer({
-                started: true,
-                count: result.result
-            });
-            if (result.result){
-                startTimer()
-            }
         });
 
         // Event: Coin flip
@@ -137,38 +124,13 @@ const Spitbox = () => {
         socket.current.emit('flip');
     };
 
-    // Event Request: Start battle
-    const startBattle = (e) => {
-        e.preventDefault();
-        socket.current.emit('startBattle');
-    };
-
-    // Event: Start Battle
-    // Timer
-    const startTimer = () => {
-        let counter = 30;
-        const timer = document.getElementById('timer');
-        const startBattleRap = setInterval(() => {
-            timer.innerHTML = counter;
-            counter--;
-            if(counter <= 5){
-               timer.style.color = 'red'
-            }
-            if(counter < 0){
-                clearInterval(startBattleRap);
-                socket.current.emit('startVote');
-            }
-        }, 1000)
-    };
-
     // Handle vote
     const submitVote = (vote) => {
       socket.current.emit('vote', vote);
     };
 
     return(
-        <SpitboxTemplate>
-                <span id="timer"></span>
+        <SpitboxTemplate socket={socket}>
                 <ol id="messages">
                     {messages && messages.map((message, index) => (<MessageBubble message={message} index={index} yourID={yourID} />))}
                 </ol>
@@ -184,7 +146,6 @@ const Spitbox = () => {
                             autoFocus="on"
                         />
                         <button type="submit" id={`send-message`} disabled={!message}>
-
                             <lord-icon
                                 animation="loop"
                                 palette="#433a55;#433a55"
@@ -195,7 +156,6 @@ const Spitbox = () => {
                         </button>
                     </form>
                     <button id="coin-flip" onClick={(e) => coinFlip(e)}>Flip</button>
-                    <button onClick={startBattle}>Start Battle</button>
                     {voteBtn ? <button onClick={(e) => submitVote('Canibus')}>Cast vote</button> : null}
                 </footer>
         </SpitboxTemplate>
