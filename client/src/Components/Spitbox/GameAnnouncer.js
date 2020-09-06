@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
+// Audio
+import Snak from '../../assets/sounds/Snak The Ripper - BLAH (Official Music Video).mp3';
+
 const GameAnnouncer = ({ socket }) => {
     console.log('GA socket is: ', socket);
 
@@ -16,6 +19,10 @@ const GameAnnouncer = ({ socket }) => {
     const [battleTimer, setBattleTimer] = useState({
         started: false,
         count: 0
+    });
+    const [playSound, setPlaySound] = useState({
+        play: false,
+        track: Snak
     });
 
     useEffect(() => {
@@ -62,14 +69,18 @@ const GameAnnouncer = ({ socket }) => {
     };
 
     return(
-        <>
+        <div id={`game-announcer`}>
             <div className="battle-button">
                 <button id="timer" onClick={startBattle}>30</button>
             </div>
             <div className="announcer-overlay">
                 <div className="announcer">{battleParams.text}</div>
+
             </div>
-        </>
+            <div id="audio-player">
+                <audio src={playSound.track} controls autoPlay={playSound.play}/>
+            </div>
+        </div>
     )
 };
 

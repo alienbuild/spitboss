@@ -1,17 +1,39 @@
 import React, {useEffect, useState} from 'react';
-import SpitbossLogo from '../../assets/images/spitboss.svg';
+import { useSelector, useDispatch } from 'react-redux';
+import GameAnnouncer from "../../Components/Spitbox/GameAnnouncer";
 
 import { loadAnimation } from 'lottie-web';
 import { defineLordIconElement } from 'lord-icon-element';
-import GameAnnouncer from "../../Components/Spitbox/GameAnnouncer";
+import SpitbossLogo from '../../assets/images/spitboss.svg';
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
 
 const SpitboxTemplate = ({children, socket}) => {
 
+    // Grab state from redux store
+    const username = useSelector(state => state.user.user.user.name);
+
     // Init state
     const [watchers, setWatchers] = useState(0);
+
+    useEffect(() => {
+        // Get users video and send it to video container
+        streamCamVideo();
+    },[]);
+
+    const streamCamVideo = () => {
+        const constraints = { audio: true, video: { width: 1280, height: 720 } };
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(function(mediaStream) {
+                const video = document.querySelector("video");
+                video.srcObject = mediaStream;
+            })
+            .catch(function(err) {
+                console.log(err.name + ": " + err.message);
+            }); // always check for errors at the end.
+    };
 
     if (socket.current){
         socket.current.on('updateUserList', (users) => {
@@ -24,8 +46,32 @@ const SpitboxTemplate = ({children, socket}) => {
         <div id="primary-grid">
             <div id="feed-container">
                 <GameAnnouncer socket={socket}/>
-                <div className="grid-item grid-item-1">WebRTC #1</div>
-                <div className="grid-item grid-item-2">WebRTC #2</div>
+                <div className="feed participant-1">
+                    <div className="participant">
+                        <div className="avatar"></div>
+                        <button>{username}</button>
+                    </div>
+                    <video
+                        id="videoElement"
+                        muted
+                        controls={false}
+                        autoPlay
+                        poster="https://is1-ssl.mzstatic.com/image/thumb/Music/v4/cb/4f/41/cb4f41f2-6d6e-540f-2119-fdf58ad19499/source/1200x1200bb.jpg"
+                    ></video>
+                </div>
+                <div className="feed participant-2">
+                    <div className="participant">
+                        <div className="avatar"></div>
+                        <button>{username}</button>
+                    </div>
+                    <video
+                        id="videoElement2"
+                        muted
+                        controls={false}
+                        autoPlay
+                        poster="https://christopherpierznik.files.wordpress.com/2017/02/canibus_at_amager_bio_4.jpg"
+                    ></video>
+                </div>
             </div>
 
             <div id="aside-grid">
@@ -33,7 +79,13 @@ const SpitboxTemplate = ({children, socket}) => {
                     <img src={SpitbossLogo} id={`logo`}/>
                     <h1>#canibusvsdizaster</h1>
                     <ul>
-                        <li>{watchers}</li>
+                        <li>
+                            <lord-icon
+                                animation="loop"
+                                palette="#8c8895;#8c8895"
+                                src={`../../assets/icons/69-eye/69-eye-solid.json`}>
+                            </lord-icon>
+                            {watchers}</li>
                         <li>Mode <strong>Pass the 40</strong></li>
                     </ul>
                 </header>
