@@ -27,7 +27,8 @@ const Spitbox = () => {
 
         // Grab socket ID
         socket.current.on("socketId", socketId => {
-            setYourID(socketId);
+            console.log('Setting your socket id.', socketId);
+            setYourID(socketId); // TODO: Save socket id to redux
         });
 
         // Event: New messages from the server
@@ -132,7 +133,7 @@ const Spitbox = () => {
     return(
         <SpitboxTemplate socket={socket}>
                 <ol id="messages">
-                    {messages && messages.map((message, index) => (<MessageBubble message={message} index={index} yourID={yourID} />))}
+                    {messages && messages.map((message, index) => (<MessageBubble message={message} key={index} yourID={yourID} />))}
                 </ol>
                 <footer>
                     <form onSubmit={handleSubmit}>

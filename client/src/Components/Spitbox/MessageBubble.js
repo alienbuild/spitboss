@@ -1,9 +1,9 @@
 import SpitbossLogo from "../../assets/images/spitboss.svg";
-import React from "react";
+import React, {useEffect} from "react";
 import ReactEmoji from 'react-emoji';
 import ReactAutolink from 'react-autolink';
 
-const MessageBubble = (message, index, yourID) => {
+const MessageBubble = (message, yourID) => {
 
     const messageClick = (socketRequest) => {
         console.log('User wants to message or view profile of ' + socketRequest);
@@ -11,7 +11,6 @@ const MessageBubble = (message, index, yourID) => {
 
     return(
         <li
-            key={index}
             className={`
                 ${message.message.socketId === yourID ? 'domestic' : 'foreign'}
                 ${message.message.socketId === 'admin' ? 'spitboss' : null}
@@ -36,7 +35,7 @@ const MessageBubble = (message, index, yourID) => {
                                         className: 'spitbox-emoji'
                                     }
                                 });
-                            } else { 
+                            } else {
                                 return el;
                             }
                         })
