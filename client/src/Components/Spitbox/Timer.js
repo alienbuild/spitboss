@@ -20,7 +20,7 @@ const Timer = ({startBattle, time}) => {
         }
     };
 
-    const TIME_LIMIT = 30;
+    const TIME_LIMIT = 120;
     let timePassed = 0;
     let timeLeft = TIME_LIMIT;
     let timerInterval = null;
@@ -59,20 +59,18 @@ const Timer = ({startBattle, time}) => {
 
     function setRemainingPathColor(timeLeft) {
         const { alert, warning, info } = COLOR_CODES;
+        const label_text = document.getElementById('base-timer-label');
+        const pathRemaining = document.getElementById('base-timer-path-remaining');
         if (timeLeft <= alert.threshold) {
-            document
-                .getElementById("base-timer-path-remaining")
-                .classList.remove(warning.class);
-            document
-                .getElementById("base-timer-path-remaining")
-                .classList.add(alert.class);
+            label_text.classList.remove(warning.class);
+            label_text.classList.add(alert.class);
+            pathRemaining.classList.remove(warning.class);
+            pathRemaining.classList.add(alert.class);
         } else if (timeLeft <= warning.threshold) {
-            document
-                .getElementById("base-timer-path-remaining")
-                .classList.remove(info.class);
-            document
-                .getElementById("base-timer-path-remaining")
-                .classList.add(warning.class);
+            label_text.classList.remove(info.class);
+            label_text.classList.add(warning.class);
+            pathRemaining.classList.remove(info.class);
+            pathRemaining.classList.add(warning.class);
         }
     }
 

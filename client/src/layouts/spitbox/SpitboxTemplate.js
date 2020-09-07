@@ -31,6 +31,13 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
             .then(function(mediaStream) {
                 const video = document.querySelector("video");
                 video.srcObject = mediaStream;
+
+                // mediaStream.getTracks().forEach(function(track) {
+                //     if (track.readyState == 'live' && track.kind === 'video') {
+                //         track.stop();
+                //     }
+                // });
+                //https://stackoverflow.com/questions/11642926/stop-close-webcam-which-is-opened-by-navigator-getusermedia
             })
             .catch(function(err) {
                 console.log(err.name + ": " + err.message);
