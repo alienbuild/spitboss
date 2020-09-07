@@ -18,7 +18,7 @@ exports.create = (req, res) => {
             })
         }
         // Check fields have values
-        const { name, description, price, mode } = fields;
+        const { name, description, price, mode } = fields; // TODO: Check/add/remove fields
         // if (!name || !description || !price || !mode){
         //     return res.status(400).json({
         //         error: 'All fields are required.'
@@ -36,4 +36,27 @@ exports.create = (req, res) => {
             res.json(result);
         })
     })
+};
+
+
+// List spitbox rooms
+exports.list = (req, res) => {
+    let order = req.query.order ? req.query.order : 'asc';
+    let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
+    let limit = req.query.limit ? parseInt(req.query.limit) : 6;
+    let offset = req.query.offset ? parseInt(req.query.offset) : 0;
+
+    Spitbox.find()
+        .sort([[sortBy, order]])
+        .limit(limit)
+        .skip(offset)
+        .exec((err, rooms) => {
+            if (err){
+                return res.status(400).json({
+                    error: 'Spitbox rooms not found.'
+                })
+            }
+            res.json(rooms)
+        })
+
 };

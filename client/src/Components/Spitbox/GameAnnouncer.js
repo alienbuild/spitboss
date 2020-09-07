@@ -69,18 +69,18 @@ const GameAnnouncer = ({ socket }) => {
     };
 
     return(
-        <div id={`game-announcer`}>
-            <div className="battle-button">
-                <button id="timer" onClick={startBattle}>30</button>
-            </div>
-            <div className="announcer-overlay">
-                <div className="announcer">{battleParams.text}</div>
+        <>
+            <button id="timer" onClick={startBattle}>30</button>
+            <div id={`game-announcer`}>
+                <div className="announcer-overlay">
+                    <div className="announcer">{battleParams.text}</div>
 
+                </div>
+                <div id="audio-player">
+                    <audio src={playSound.track} controls autoPlay={playSound.play}/>
+                </div>
             </div>
-            <div id="audio-player">
-                <audio src={playSound.track} controls autoPlay={playSound.play}/>
-            </div>
-        </div>
+        </>
     )
 };
 

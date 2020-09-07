@@ -284,14 +284,28 @@
       nav{
         ul{
           li{
+            width: 100%;
+            a, button{
+              display: block;
+              width: 100%;
+              lord-icon{
+                height: 100px;
+                width: 60px;
+                margin: auto;
+                display: block;
+              }
+            }
             a{
               background: lighten($dark-background, 10%);
               border-bottom: 3px solid $light-background;
               display: block;
-              lord-icon{
-                height: 90px;
-                width: 100%;
-              }
+
+            }
+            button{
+              border: none;
+              cursor: pointer;
+              background: transparent;
+              border-bottom: 1px solid $light-background;
             }
           }
         }
@@ -322,29 +336,26 @@
     text-shadow: 10px 5px 0px #000;
   }
 }
-.battle-button{
+button#timer{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 3px solid $dark-background;
+  display: block;
+  background: $yellow;
+  margin: auto;
+  padding: 0;
+  cursor: pointer;
+  font-size: 48px;
+  color: $dark-background;
+  font-weight: bold;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  button{
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    border: 3px solid $dark-background;
-    display: block;
-    background: $yellow;
-    margin: auto;
-    padding: 0;
-    cursor: pointer;
-    font-size: 48px;
-    color: $dark-background;
-    font-weight: bold;
-    &:focus{ outline: none; }
-  }
+  left: 50%;
+  margin-left: -50px;
+  z-index: 550;
+  top: 50%;
+  margin-top: -50px;
+  &:focus{ outline: none; }
 }
 
 .spitbox-emoji{

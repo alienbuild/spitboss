@@ -5,6 +5,7 @@ import GameAnnouncer from "../../Components/Spitbox/GameAnnouncer";
 import { loadAnimation } from 'lottie-web';
 import { defineLordIconElement } from 'lord-icon-element';
 import SpitbossLogo from '../../assets/images/spitboss.svg';
+import ModalRooms from "../../Components/Spitbox/ModalRooms";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -16,6 +17,7 @@ const SpitboxTemplate = ({children, socket}) => {
 
     // Init state
     const [watchers, setWatchers] = useState(0);
+    const [showRoomsModal, setShowRoomsModal] = useState(false);
 
     useEffect(() => {
         // Get users video and send it to video container
@@ -107,6 +109,17 @@ const SpitboxTemplate = ({children, socket}) => {
                                         </lord-icon>
                                     </a>
                                 </li>
+                                <li>
+                                    <button onClick={e => setShowRoomsModal(!showRoomsModal)}>
+                                        <lord-icon
+                                            animation="loop"
+                                            palette="#ffffff;#fecb47"
+                                            target="button"
+                                            size={'10px'}
+                                            src={`../../assets/icons/27-globe/27-globe-outline.json`}>
+                                        </lord-icon>
+                                    </button>
+                                </li>
                             </ul>
                         </nav>
                     </aside>
@@ -114,6 +127,9 @@ const SpitboxTemplate = ({children, socket}) => {
             </div>
 
         </div>
+
+            { showRoomsModal ? <ModalRooms setShowRoomsModal={setShowRoomsModal}/> : null}
+
     </>
     )
 };
