@@ -31,6 +31,12 @@ const Spitbox = () => {
             setYourID(socketId); // TODO: Save socket id to redux
         });
 
+        // Event: Disconnect
+        socket.current.on('disconnect', () => {
+            console.log('Disconnected from server.');
+            socket.leave('general');
+        });
+
         // Event: New messages from the server
         socket.current.on('newMessage', (message) => {
             receivedMessage(message);
@@ -43,8 +49,6 @@ const Spitbox = () => {
             user: username,
             room: 'general'
         });
-        console.log('My username is: ', username);
-
 
         // Question/Poll test
         socket.current.on('news', function (data, ack) {
@@ -131,7 +135,7 @@ const Spitbox = () => {
     };
 
     return(
-        <SpitboxTemplate socket={socket}>
+        <SpitboxTemplate socket={socket} setMessages={setMessages}>
                 <ol id="messages">
                     {messages && messages.map((message, index) => (<MessageBubble message={message} key={index} yourID={yourID} />))}
                 </ol>

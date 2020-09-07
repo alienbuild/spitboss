@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // Audio
 import Snak from '../../assets/sounds/Snak The Ripper - BLAH (Official Music Video).mp3';
+import Timer from "./Timer";
 
 const GameAnnouncer = ({ socket }) => {
     console.log('GA socket is: ', socket);
@@ -70,7 +71,7 @@ const GameAnnouncer = ({ socket }) => {
 
     return(
         <>
-            <button id="timer" onClick={startBattle}>30</button>
+            <Timer startBattle={startBattle} time={30} />
             <div id={`game-announcer`}>
                 <div className="announcer-overlay">
                     <div className="announcer">{battleParams.text}</div>

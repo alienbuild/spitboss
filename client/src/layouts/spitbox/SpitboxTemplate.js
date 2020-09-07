@@ -10,7 +10,7 @@ import ModalRooms from "../../Components/Spitbox/ModalRooms";
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
 
-const SpitboxTemplate = ({children, socket}) => {
+const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     // Grab state from redux store
     const username = useSelector(state => state.user.user.user.name);
@@ -128,7 +128,7 @@ const SpitboxTemplate = ({children, socket}) => {
 
         </div>
 
-            { showRoomsModal ? <ModalRooms setShowRoomsModal={setShowRoomsModal}/> : null}
+            { showRoomsModal ? <ModalRooms setShowRoomsModal={setShowRoomsModal} socket={socket} setMessages={setMessages} /> : null}
 
     </>
     )
