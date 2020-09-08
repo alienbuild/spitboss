@@ -60,6 +60,8 @@ const ModalRooms = ({showModal, setShowRoomsModal, socket, setMessages}) => {
                                 <span className="room-mode">{room.mode}</span>
                                 <span className="room-desc">{room.description}</span>
                                 <span className="room-progress">{room.progress}</span>
+                                <span>{room.participants}</span>
+                                {console.log('type of: ', typeof room.participants)}
                                 <button onClick={(e) => handleJoin(e, room.name)}>Join</button>
                             </li>
                         ))}

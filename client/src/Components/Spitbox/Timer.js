@@ -95,7 +95,7 @@ const Timer = ({startBattle, time}) => {
                     <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
                     <path
                         id="base-timer-path-remaining"
-                        stroke-dasharray="283"
+                        strokeDasharray="283"
                         className={`base-timer__path-remaining ${remainingPathClass}`}
                         d="M 50, 50 m -45, 0 a 45,45 0 1,0 90,0 a 45,45 0 1,0 -90,0"
                     ></path>

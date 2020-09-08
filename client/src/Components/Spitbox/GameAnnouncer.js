@@ -6,11 +6,9 @@ import Snak from '../../assets/sounds/Snak The Ripper - BLAH (Official Music Vid
 import Timer from "./Timer";
 
 const GameAnnouncer = ({ socket }) => {
-    console.log('GA socket is: ', socket);
 
     // Grab state from redux store
     const username = useSelector(state => state.user.user.user.name);
-    console.log('Redux data is: ', username);
 
     // Init state
     const [battleParams, setBattleParams] = useState({

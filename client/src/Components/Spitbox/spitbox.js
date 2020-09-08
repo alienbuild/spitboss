@@ -16,7 +16,6 @@ const Spitbox = () => {
 
     // Grab state from redux store
     const username = useSelector(state => state.user.user.user.name);
-    console.log('Redux data is: ', username);
 
     // Create socket ref
     const socket = useRef();
@@ -34,7 +33,7 @@ const Spitbox = () => {
         // Event: Disconnect
         socket.current.on('disconnect', () => {
             console.log('Disconnected from server.');
-            socket.leave('general');
+            socket.current.leave('general');
         });
 
         // Event: New messages from the server
@@ -47,12 +46,11 @@ const Spitbox = () => {
         // Join room 'General' for now. TODO: Make dynamic room joins
         socket.current.emit('join', {
             user: username,
-            room: 'general'
+            room: 'Spitbox #2'
         });
 
         // Question/Poll test
         socket.current.on('news', function (data, ack) {
-            console.log(data);
             if(ack){
                 ack("acknowledge from client");
             }

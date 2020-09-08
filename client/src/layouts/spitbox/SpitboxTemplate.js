@@ -6,6 +6,7 @@ import { loadAnimation } from 'lottie-web';
 import { defineLordIconElement } from 'lord-icon-element';
 import SpitbossLogo from '../../assets/images/spitboss.svg';
 import ModalRooms from "../../Components/Spitbox/ModalRooms";
+import {getSpitboxRoom} from "../../Components/Spitbox/apiSpitbox";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -20,9 +21,14 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
     const [showRoomsModal, setShowRoomsModal] = useState(false);
 
     useEffect(() => {
+        // Get room by id
+        getSpitboxRoom('5f53bb2415aed9537c2dfc42')
+            .then(res => console.log('Get spitbox room response: ', res))
+            .catch(e => console.log('Error', e));
+
         // Get users video and send it to video container
         streamCamVideo();
-    },[]);
+    },[socket]);
 
     const streamCamVideo = () => {
         const constraints = { audio: true, video: { width: 1280, height: 720 } };

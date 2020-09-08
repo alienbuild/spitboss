@@ -60,3 +60,16 @@ exports.list = (req, res) => {
         })
 
 };
+
+// Find product by ID
+exports.read = (req, res) => {
+    Spitbox.findById(req.params.id)
+        .exec((err, spitbox) => {
+            if (err || !spitbox){
+                return res.status(400).json({
+                    error: 'Product not found.'
+                })
+            }
+            res.json(spitbox)
+        })
+};

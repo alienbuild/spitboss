@@ -10,3 +10,14 @@ export const getSpitboxRooms = () => {
         })
         .catch(err => console.log('Error', err))
 };
+
+// Get Spitbox room by id
+export const getSpitboxRoom = (productId) => {
+    return fetch(`${API}/spitbox/read/${productId}`, {
+        method: "GET"
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log('Error', err))
+};
