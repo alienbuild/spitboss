@@ -1,4 +1,3 @@
-const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -108,7 +107,7 @@ io.on('connection', (socket) => {
         io.to(user.room).emit('coinFlip', { result: 'Coin has been flipped...' });
         setTimeout(() => {
             let result = '';
-            x = (Math.floor(Math.random() * 2) == 0);
+            x = (Math.floor(Math.random() * 2) === 0);
             if (x) {
                 result = 'Heads';
             } else {
