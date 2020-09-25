@@ -38,7 +38,7 @@ const Spitbox = () => {
         // Event: Disconnect
         socket.current.on('disconnect', () => {
             console.log('Disconnected from server.');
-            socket.current.leave('general');
+            socket.current.leave('Spitbox #2');
         });
 
         // Event: New messages from the server
