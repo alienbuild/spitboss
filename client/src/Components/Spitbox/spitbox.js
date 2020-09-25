@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import io from "socket.io-client";
+import {saveSocketToken} from "../../actions/userActions";
 
 // Components
 import SpitboxTemplate from "../../layouts/spitbox/SpitboxTemplate";
 import MessageBubble from "./MessageBubble";
 
 const Spitbox = () => {
+
+    // Ready dispatch
+    const dispatch = useDispatch();
 
     // Init state
     const [yourID, setYourID] = useState();
@@ -28,6 +32,7 @@ const Spitbox = () => {
         socket.current.on("socketId", socketId => {
             console.log('Setting your socket id.', socketId);
             setYourID(socketId); // TODO: Save socket id to redux
+            dispatch(saveSocketToken(socketId));
         });
 
         // Event: Disconnect

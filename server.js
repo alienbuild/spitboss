@@ -97,7 +97,7 @@ io.on('connection', (socket) => {
         // } else { console.log('User has disconnected.'); }
         if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));
-            io.to(user.room).emit('newMessage', generateMessage('Passthe40', `${user.name} has left.`));
+            io.to(user.room).emit('newMessage', generateMessage('Spitboss', `${user.name} has left.`));
         }
     });
 
