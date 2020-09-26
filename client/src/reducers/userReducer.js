@@ -1,4 +1,4 @@
-import {LOGIN_REQUEST, SAVE_TOKEN, USER_LOGOUT} from "../actions/types";
+import { LOGIN_REQUEST, SAVE_TOKEN, USER_LOGOUT } from "../actions/types";
 
 let user = JSON.parse(localStorage.getItem('jwt'));
 const initialState = user ? { loggedIn: true, user } : {};

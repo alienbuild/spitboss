@@ -7,23 +7,38 @@ import { defineLordIconElement } from 'lord-icon-element';
 import SpitbossLogo from '../../assets/images/spitboss.svg';
 import ModalRooms from "../../Components/Spitbox/ModalRooms";
 import {getSpitboxRoom} from "../../Components/Spitbox/apiSpitbox";
+import {saveSpitboxRoom} from "../../actions/spitboxActions";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
 
 const SpitboxTemplate = ({children, socket, setMessages}) => {
 
+    // Ready dispatch
+    const dispatch = useDispatch();
+
     // Grab state from redux store
     const username = useSelector(state => state.user.user.user.name);
+    const userId = useSelector(state => state.user.user.user._id);
 
     // Init state
     const [watchers, setWatchers] = useState(0);
     const [showRoomsModal, setShowRoomsModal] = useState(false);
+    const [participants, setParticipants] = useState([]);
 
     useEffect(() => {
         // Get room by id
         getSpitboxRoom('5f53bb2415aed9537c2dfc42')
-            .then(res => console.log('Get spitbox room response: ', res))
+            .then(res => {
+
+                console.log('Get spitbox room: ', res);
+                // Save room data to redux
+                dispatch(saveSpitboxRoom(res));
+
+                // Grab participants
+                setParticipants(res.participants)
+
+            })
             .catch(e => console.log('Error', e));
 
         // Get users video and send it to video container
@@ -58,6 +73,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     return(
         <>
+        {participants.includes(userId) ? 'YES!!!' : 'NO!!!'}
         <div id="primary-grid">
             <div id="feed-container">
                 <GameAnnouncer socket={socket}/>

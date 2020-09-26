@@ -12,8 +12,8 @@ export const getSpitboxRooms = () => {
 };
 
 // Get Spitbox room by id
-export const getSpitboxRoom = (productId) => {
-    return fetch(`${API}/spitbox/read/${productId}`, {
+export const getSpitboxRoom = (spitboxId) => {
+    return fetch(`${API}/spitbox/read/${spitboxId}`, {
         method: "GET"
     })
         .then(response => {
