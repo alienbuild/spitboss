@@ -1,4 +1,5 @@
 import React from "react";
+import UserAvControls from "../UserAvControls";
 
 const Battle = ({ spitbox, username }) => {
     return (
@@ -8,6 +9,7 @@ const Battle = ({ spitbox, username }) => {
                     <div className="avatar"></div>
                     <button>{username}</button>
                 </div>
+                <UserAvControls />
                 <video
                     id="videoElement"
                     muted
