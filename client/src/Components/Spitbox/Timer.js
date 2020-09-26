@@ -2,9 +2,12 @@ import React, {useEffect} from "react";
 
 const Timer = ({startBattle, time}) => {
 
+
+    const TIME_LIMIT = 120;
+
     const FULL_DASH_ARRAY = 283;
-    const WARNING_THRESHOLD = 10;
-    const ALERT_THRESHOLD = 5;
+    const WARNING_THRESHOLD = TIME_LIMIT / 2;
+    const ALERT_THRESHOLD = WARNING_THRESHOLD / 2;
 
     const COLOR_CODES = {
         info: {
@@ -20,7 +23,6 @@ const Timer = ({startBattle, time}) => {
         }
     };
 
-    const TIME_LIMIT = 120;
     let timePassed = 0;
     let timeLeft = TIME_LIMIT;
     let timerInterval = null;

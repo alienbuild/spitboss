@@ -33,7 +33,7 @@ const Spitbox = () => {
         socket.current.on("socketId", socketId => {
             console.log('Setting your socket id.', socketId);
             setYourID(socketId); // TODO: Save socket id to redux
-            //dispatch(saveSocketToken(socketId));
+            dispatch(saveSocketToken(socketId));
         });
 
         // Event: Disconnect
