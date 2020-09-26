@@ -8,6 +8,8 @@ import SpitbossLogo from '../../assets/images/spitboss.svg';
 import ModalRooms from "../../Components/Spitbox/ModalRooms";
 import {getSpitboxRoom} from "../../Components/Spitbox/apiSpitbox";
 import {saveSpitboxRoom} from "../../actions/spitboxActions";
+import Battle from "../../Components/Spitbox/RoomTypes/Battle";
+import PassThe40 from "../../Components/Spitbox/RoomTypes/PassThe40";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -25,6 +27,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
     const [watchers, setWatchers] = useState(0);
     const [showRoomsModal, setShowRoomsModal] = useState(false);
     const [participants, setParticipants] = useState([]);
+    const [spitbox, setSpitbox] = useState();
 
     useEffect(() => {
         // Get room by id
@@ -35,12 +38,17 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
                 // Save room data to redux
                 dispatch(saveSpitboxRoom(res));
 
+                // Save spitbox details
+                setSpitbox(res);
+
                 // Grab participants
                 setParticipants(res.participants)
 
             })
             .catch(e => console.log('Error', e));
+    },[]);
 
+    useEffect(() => {
         // Get users video and send it to video container
         streamCamVideo();
     },[socket]);
@@ -76,33 +84,8 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
             {participants.includes(userId) ? <button>READY</button> : null}
         <div id="primary-grid">
             <div id="feed-container">
-                <GameAnnouncer socket={socket}/>
-                <div className="feed participant-1">
-                    <div className="participant">
-                        <div className="avatar"></div>
-                        <button>{username}</button>
-                    </div>
-                    <video
-                        id="videoElement"
-                        muted
-                        controls={false}
-                        autoPlay
-                        poster="https://is1-ssl.mzstatic.com/image/thumb/Music/v4/cb/4f/41/cb4f41f2-6d6e-540f-2119-fdf58ad19499/source/1200x1200bb.jpg"
-                    ></video>
-                </div>
-                <div className="feed participant-2">
-                    <div className="participant">
-                        <div className="avatar"></div>
-                        <button>{username}</button>
-                    </div>
-                    <video
-                        id="videoElement2"
-                        muted
-                        controls={false}
-                        autoPlay
-                        poster="https://christopherpierznik.files.wordpress.com/2017/02/canibus_at_amager_bio_4.jpg"
-                    ></video>
-                </div>
+                <GameAnnouncer socket={socket} />
+                {spitbox && spitbox.mode === 'battle' ? <Battle spitbox={spitbox} username={username} /> : <PassThe40 spitbox={spitbox} username={username} />}
             </div>
 
             <div id="aside-grid">
