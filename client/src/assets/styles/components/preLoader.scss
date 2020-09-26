@@ -1,0 +1,43 @@
+#preloader{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  z-index: 99999;
+  opacity: 1;
+  transition: 0.3s all;
+  background:  #000;
+  overflow: hidden;
+  img{
+    width: 50%;
+  }
+  &.loaded{
+    opacity: 0;
+    transition: 1.3s ease-in-out;
+    img{
+      transform: scale(10,10);
+      transition: 1s all;
+      animation: shake 1s cubic-bezier(.36,.07,.19,.97) both;
+    }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0) scale(10,10);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0) scale(4,4);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0) scale(10,10);
+  }
+}

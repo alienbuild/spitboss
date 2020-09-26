@@ -10,6 +10,7 @@ import {getSpitboxRoom} from "../../Components/Spitbox/apiSpitbox";
 import {saveSpitboxRoom} from "../../actions/spitboxActions";
 import Battle from "../../Components/Spitbox/RoomTypes/Battle";
 import PassThe40 from "../../Components/Spitbox/RoomTypes/PassThe40";
+import PreLoader from "../../Components/Spitbox/PreLoader";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -81,13 +82,13 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     return(
         <>
-            {participants.includes(userId) ? <button>READY</button> : null}
+        {participants.includes(userId) ? <button>READY</button> : null}
+        <PreLoader />
         <div id="primary-grid">
             <div id="feed-container">
                 <GameAnnouncer socket={socket} />
                 {spitbox && spitbox.mode === 'battle' ? <Battle spitbox={spitbox} username={username} /> : <PassThe40 spitbox={spitbox} username={username} />}
             </div>
-
             <div id="aside-grid">
                 <header>
                     <img src={SpitbossLogo} id={`logo`}/>
@@ -137,7 +138,6 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
                     </aside>
                 </div>
             </div>
-
         </div>
 
             { showRoomsModal ? <ModalRooms setShowRoomsModal={setShowRoomsModal} socket={socket} setMessages={setMessages} /> : null}
