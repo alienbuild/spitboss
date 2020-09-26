@@ -35,7 +35,6 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
         getSpitboxRoom('5f53bb2415aed9537c2dfc42')
             .then(res => {
 
-                console.log('Get spitbox room: ', res);
                 // Save room data to redux
                 dispatch(saveSpitboxRoom(res));
 
