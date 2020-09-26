@@ -73,7 +73,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     return(
         <>
-        {participants.includes(userId) ? 'YES!!!' : 'NO!!!'}
+            {participants.includes(userId) ? <button>READY</button> : null}
         <div id="primary-grid">
             <div id="feed-container">
                 <GameAnnouncer socket={socket}/>
