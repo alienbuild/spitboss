@@ -8,8 +8,10 @@
   z-index: 99999;
   opacity: 1;
   transition: 0.3s all;
-  background:  #000;
+  background:  #000 url('../../images/preloader-bg.png');
   overflow: hidden;
+  display: flex;
+  justify-content: center;
   img{
     width: 50%;
   }
