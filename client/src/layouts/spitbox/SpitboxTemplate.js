@@ -137,7 +137,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
             </div>
         </div>
 
-            { showRoomsModal ? <ModalRooms setShowRoomsModal={setShowRoomsModal} socket={socket} setMessages={setMessages} /> : null}
+        { showRoomsModal ? <ModalRooms setShowRoomsModal={setShowRoomsModal} socket={socket} setMessages={setMessages} /> : null}
 
     </>
     )
