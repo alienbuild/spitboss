@@ -30,9 +30,27 @@
   }
 }
 
-.border {
+.participant-overlay{
+  display: none;
   position: absolute;
-  display: block;
+  top: -50%;
+  left: -50%;
+  z-index: 10;
+  height: 203%;
+  width: 203%;
+  transform: rotate(-45deg);
+  overflow: hidden;
+  animation: shine 2s linear infinite;
+  background: linear-gradient(to right, #000 20%, #000 40%, $green 50%, $green 55%, #000 70%, #000 100%);
+  background-size: 200% auto;
+  &.active{
+    opacity: 0.2;
+    display: block;
+  }
+}
+.participant-border{
+  position: absolute;
+  display: none;
   top: -50%;
   left: -50%;
   z-index: 0;
@@ -40,7 +58,19 @@
   width: 203%;
   transform: rotate(-45deg);
   overflow: hidden;
-  background: linear-gradient(to right, #000 20%, #000 40%, $green 50%, $green 55%, #000 70%, #000 100%);
-  background-size: 200% auto;
   animation: shine 2s linear infinite;
+  &.active{
+    display: block;
+    background: linear-gradient(to right, #000 20%, #000 40%, $green 50%, $green 55%, #000 70%, #000 100%);
+    background-size: 200% auto;
+  }
+}
+
+.box-list{
+  li{
+    margin-bottom: 20px;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 10px;
+  }
 }

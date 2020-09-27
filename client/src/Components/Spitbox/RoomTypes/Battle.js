@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import UserAvControls from "../UserAvControls";
 import {useSelector} from "react-redux";
+import OpponentAvControls from "../OpponentAvControls";
 
 const Battle = ({ spitbox, username }) => {
 
@@ -8,15 +9,22 @@ const Battle = ({ spitbox, username }) => {
     const userId = useSelector(state => state.user.user.user._id);
     const participants = useSelector(state => state.spitbox.spitbox.participants);
 
+    const [userReady, setUserReady] = useState(false);
+
+    const toggleUserReady = () => {
+      setUserReady(!userReady);
+    };
+
     return (
         <>
             <div className="feed participant-1">
-                <div className="border"></div>
+                <div className={`participant-overlay ${userReady ? 'active' : null}`}></div>
+                <div className={`participant-border ${userReady ? 'active' : null}`}></div>
                 <div className="participant">
                     <div className="avatar"></div>
                     <button>{username}</button>
                 </div>
-                {participants.includes(userId) ? <UserAvControls /> : null}
+                {participants.includes(userId) ? <UserAvControls toggleUserReady={toggleUserReady} /> : null}
                 <video
                     id="videoElement"
                     muted
@@ -30,6 +38,7 @@ const Battle = ({ spitbox, username }) => {
                 <div className="avatar"></div>
                 <button>{username}</button>
             </div>
+            <OpponentAvControls />
             <video
                 id="videoElement2"
                 muted

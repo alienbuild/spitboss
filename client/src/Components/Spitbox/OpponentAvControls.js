@@ -1,15 +1,13 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 
-const UserAvControls = ({toggleUserReady}) => {
+const OpponentAvControls = () => {
 
     const [muteMicrophone, setMuteMicrophone] = useState(true);
     const [showCamera, setShowCamera] = useState(false);
     const [ready, setReady] = useState(false);
 
-    const toggleMicrophone = (e) => {
-        e.preventDefault();
-        //e.target.setAttribute('palette', '#FECB47;#e5251f');
+    const toggleMicrophone = () => {
         setMuteMicrophone(!muteMicrophone);
     }
 
@@ -19,17 +17,15 @@ const UserAvControls = ({toggleUserReady}) => {
 
     const toggleReady = () => {
         setReady(!ready);
-        toggleUserReady();
     }
 
     return (
-        <div className={`user-av-controls`}>
-            <button onClick={e => toggleReady()} className={`ready-button ${ready ? 'user-not-ready' : 'user-ready'}`}>{ready ? 'Cancel' : 'Ready'}</button>
+        <div className="opponent-av-controls">
+            <button className="opponent-ready waiting">Waiting</button>
             <ul>
                 <li>
-                    <button id={`toggle-microphone`} onClick={e => toggleMicrophone(e)}>
+                    <button id={`toggle-microphone`} onClick={toggleMicrophone}>
                         <lord-icon
-                            reverse={true}
                             target="button"
                             animation="click"
                             palette="#CCCCCC;#CCCCCC"
@@ -52,4 +48,4 @@ const UserAvControls = ({toggleUserReady}) => {
     )
 }
 
-export default UserAvControls;
+export default OpponentAvControls;

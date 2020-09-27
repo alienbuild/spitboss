@@ -73,7 +73,6 @@ const GameAnnouncer = ({ socket }) => {
             <div id={`game-announcer`}>
                 <div className="announcer-overlay">
                     <div className="announcer">{battleParams.text}</div>
-
                 </div>
                 <div id="audio-player">
                     <audio src={playSound.track} controls autoPlay={playSound.play}/>

@@ -15,7 +15,7 @@ import PreLoader from "../../Components/Spitbox/PreLoader";
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
 
-const SpitboxTemplate = ({children, socket, setMessages}) => {
+const SpitboxTemplate = ({children, socket, spitboxId, setMessages}) => {
 
     // Ready dispatch
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     useEffect(() => {
         // Get room by id
-        getSpitboxRoom('5f53bb2415aed9537c2dfc42')
+        getSpitboxRoom(spitboxId)
             .then(res => {
 
                 // Save room data to redux
@@ -89,7 +89,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
             <div id="aside-grid">
                 <header>
                     <img src={SpitbossLogo} id={`logo`}/>
-                    <h1>#canibusvsdizaster <span className="beta">beta</span></h1>
+                    <h1>#{spitbox && spitbox.name.toLowerCase()} <span className="beta">beta</span></h1>
                     <ul>
                         <li>
                             <lord-icon
@@ -98,7 +98,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
                                 src={`../../assets/icons/69-eye/69-eye-solid.json`}>
                             </lord-icon>
                             {watchers}</li>
-                        <li>Mode <strong>Pass the 40</strong></li>
+                        <li>Mode <strong>{spitbox && spitbox.mode}</strong></li>
                     </ul>
                 </header>
                 <div id="aside-nav-grid">

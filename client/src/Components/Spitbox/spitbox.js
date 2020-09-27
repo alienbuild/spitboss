@@ -7,7 +7,11 @@ import {saveSocketToken} from "../../actions/userActions";
 import SpitboxTemplate from "../../layouts/spitbox/SpitboxTemplate";
 import MessageBubble from "./MessageBubble";
 
-const Spitbox = () => {
+const Spitbox = ({match}) => {
+
+    // Get spitbox id request
+    const spitboxId = match.params.id;
+    console.log('Spitbox ID is: ', spitboxId);
 
     // Ready dispatch
     const dispatch = useDispatch();
@@ -142,7 +146,7 @@ const Spitbox = () => {
     };
 
     return(
-        <SpitboxTemplate socket={socket} setMessages={setMessages}>
+        <SpitboxTemplate socket={socket} spitboxId={spitboxId} setMessages={setMessages}>
                 <ol id="messages">
                     {messages && messages.map((message, index) => (<MessageBubble message={message} key={index} yourID={yourID} />))}
                 </ol>
