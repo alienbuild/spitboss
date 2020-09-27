@@ -42,7 +42,7 @@
   cursor: pointer;
   background: linear-gradient($green, #0e382c);
   border: 3px #25793b solid;
-  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+  text-shadow: 1px 1px 1px $green;
   transition: .1s;
   transform: scale(1);
   -webkit-user-select: none;
@@ -50,6 +50,7 @@
   overflow: hidden;
   height: 75px;
   opacity: 0.8;
+  text-transform: uppercase;
   &:hover{
     text-shadow: 0 0 20px rgba(255,255,255,0.5);
     transform: scale(1.05);
@@ -76,5 +77,11 @@
     text-shadow: 0 0 20px rgba(255,255,255,0.5);
     transform: scale(1);
     box-shadow: 0 0 75px rgba(43,137,68,0.5);
+  }
+  &.user-not-ready{
+    background: linear-gradient($red, darken($red, 30%));
+    border: 3px darken($red, 10%) solid;
+    color: lighten($red, 50%);
+    text-shadow: 1px 1px 1px $red;
   }
 }

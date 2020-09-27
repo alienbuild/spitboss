@@ -5,6 +5,7 @@ const UserAvControls = () => {
 
     const [muteMicrophone, setMuteMicrophone] = useState(true);
     const [showCamera, setShowCamera] = useState(false);
+    const [ready, setReady] = useState(false);
 
     const toggleMicrophone = () => {
         setMuteMicrophone(!muteMicrophone);
@@ -14,9 +15,13 @@ const UserAvControls = () => {
         setShowCamera(!showCamera);
     }
 
+    const toggleReady = () => {
+        setReady(!ready);
+    }
+
     return (
         <div className={`user-av-controls`}>
-            <button className={`ready-button`}>READY</button>
+            <button onClick={e => toggleReady()} className={`ready-button ${ready ? 'user-not-ready' : 'user-ready'}`}>{ready ? 'Cancel' : 'Ready'}</button>
             <ul>
                 <li>
                     <button id={`toggle-microphone`} onClick={toggleMicrophone}>

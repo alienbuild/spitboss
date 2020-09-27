@@ -11,6 +11,7 @@ const Battle = ({ spitbox, username }) => {
     return (
         <>
             <div className="feed participant-1">
+                <div className="border"></div>
                 <div className="participant">
                     <div className="avatar"></div>
                     <button>{username}</button>

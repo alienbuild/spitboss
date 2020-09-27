@@ -89,7 +89,7 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
             <div id="aside-grid">
                 <header>
                     <img src={SpitbossLogo} id={`logo`}/>
-                    <h1>#canibusvsdizaster</h1>
+                    <h1>#canibusvsdizaster <span className="beta">beta</span></h1>
                     <ul>
                         <li>
                             <lord-icon
