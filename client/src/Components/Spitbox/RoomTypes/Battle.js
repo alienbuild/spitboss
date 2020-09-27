@@ -1,7 +1,13 @@
 import React from "react";
 import UserAvControls from "../UserAvControls";
+import {useSelector} from "react-redux";
 
 const Battle = ({ spitbox, username }) => {
+
+    // Grab state from redux store
+    const userId = useSelector(state => state.user.user.user._id);
+    const participants = useSelector(state => state.spitbox.spitbox.participants);
+
     return (
         <>
             <div className="feed participant-1">
@@ -9,7 +15,7 @@ const Battle = ({ spitbox, username }) => {
                     <div className="avatar"></div>
                     <button>{username}</button>
                 </div>
-                <UserAvControls />
+                {participants.includes(userId) ? <UserAvControls /> : null}
                 <video
                     id="videoElement"
                     muted

@@ -22,7 +22,6 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     // Grab state from redux store
     const username = useSelector(state => state.user.user.user.name);
-    const userId = useSelector(state => state.user.user.user._id);
 
     // Init state
     const [watchers, setWatchers] = useState(0);
@@ -81,7 +80,6 @@ const SpitboxTemplate = ({children, socket, setMessages}) => {
 
     return(
         <>
-        {participants.includes(userId) ? <button>READY</button> : null}
         <PreLoader />
         <div id="primary-grid">
             <div id="feed-container">

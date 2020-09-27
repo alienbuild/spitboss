@@ -4,27 +4,77 @@
   width: 100%;
   z-index: 5000;
   text-align: center;
-  li{
-    display: inline-block;
-    margin-right: 20px;
-    &:last-child{ margin-right: 0; }
-    button{
-      background: $dark-background;
-      border-radius: 50%;
-      height: 60px;
-      width: 60px;
-      text-align: center;
-      border: 3px solid $light-background;
-      cursor: pointer;
-      transition: 0.6s all;
-      &:hover{
-        background: lighten($dark-background, 5%);
-        transition: 0.3s all;
-      }
-      lord-icon{
-        height: 100%;
-        width: 100%;
+  ul{
+    li{
+      display: inline-block;
+      margin-right: 20px;
+      &:last-child{ margin-right: 0; }
+      button{
+        background: $dark-background;
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+        text-align: center;
+        border: 3px solid $light-background;
+        cursor: pointer;
+        transition: 0.6s all;
+        &:hover{
+          background: lighten($dark-background, 5%);
+          transition: 0.3s all;
+        }
+        lord-icon{
+          height: 100%;
+          width: 100%;
+        }
       }
     }
+  }
+}
+
+// Ready button
+.ready-button{
+  margin-bottom: 40px;
+  padding: 10px 30px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 42px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient($green, #0e382c);
+  border: 3px #25793b solid;
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+  transition: .1s;
+  transform: scale(1);
+  -webkit-user-select: none;
+  box-shadow: 0 0 50px rgba(0,117,9,0.5);
+  overflow: hidden;
+  height: 75px;
+  opacity: 0.8;
+  &:hover{
+    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    transform: scale(1.05);
+    &:after{
+      left: 400px;
+      transition: .3s ease-in-out;
+    }
+  }
+  &:after{
+    content: "";
+    position: relative;
+    top: -120px;
+    left: -90px;
+    display: block;
+    width: 35px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.5);
+    transform: rotate(35deg);
+    -webkit-filter: blur(20px);
+    transition: none;
+  }
+  &:focus, &:active{
+    background: linear-gradient($green, #114435);
+    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    transform: scale(1);
+    box-shadow: 0 0 75px rgba(43,137,68,0.5);
   }
 }
