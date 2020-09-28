@@ -3,7 +3,20 @@ import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import { createSpitbox } from "../Spitbox/apiSpitbox";
 
+// Bootstrap imports
+import Row from "react-bootstrap/cjs/Row";
+import Col from "react-bootstrap/cjs/Col";
+import Nav from "react-bootstrap/cjs/Nav";
+import Modal from "react-bootstrap/cjs/Modal";
+import Button from "react-bootstrap/cjs/Button";
+import Tab from "react-bootstrap/cjs/Tab";
+
 const CreateBoxes = () => {
+
+    // Modal Controls
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     // Init state
     const [values, setValues] = useState({
@@ -68,40 +81,64 @@ const CreateBoxes = () => {
 
     // Form markup
     const newSpitboxForm = () => (
-        <form onSubmit={handleSubmit}>
-
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" onChange={handleChange('name')} value={name} />
-
-            <br/>
-
-            <label htmlFor="description">Description</label>
-            <input type="textarea" name="description" onChange={handleChange('description')} value={description} />
-
-            <br/>
-
-            <label htmlFor="price">Price</label>
-            <input type="number" name="price" onChange={handleChange('price')} value={price} />
-
-            <br/>
-
-            <label htmlFor="category">Category</label>
-            <select name="category" id="category" onChange={handleChange('category')}>
-                <option disabled selected>Please select</option>
-                {/*{categories && categories.map((category, index) => (*/}
-                {/*    <option key={index} value={category._id}>{category.name}</option>*/}
-                {/*))}*/}
-            </select>
-
-            <br/>
-
-            <label htmlFor="quantity">Quantity</label>
-            <input type="number" name="quantity" onChange={handleChange('quantity')} value={quantity} />
-
-            <br/>
-
-            <button type="submit">Create Spitbox</button>
-        </form>
+        <>
+            <h2>Create your Spitbox</h2>
+            <Tab.Container id="left-tabs-example">
+                <Row>
+                    <Col sm={12}>
+                        <Nav variant="pills" className="flex-column">
+                            <Nav.Item>
+                                <Nav.Link eventKey="first">
+                                    Spitbox Settings
+                                    <small>Set the mode, ticket price and other specifics.</small>
+                                </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="second">
+                                    Who is being challenged?
+                                    <small>Select opponent...</small>
+                                </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="third">
+                                    Start time
+                                    <small>Now</small>
+                                </Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Col>
+                    <Col sm={12}>
+                        <Tab.Content>
+                            <Tab.Pane eventKey="first">
+                                {/*Settings*/}
+                                <label htmlFor="description">Description</label>
+                                <input type="textarea" name="description" onChange={handleChange('description')} value={description} />
+                                <br/>
+                                <label htmlFor="price">PPV Price</label>
+                                <input type="number" name="price" onChange={handleChange('price')} value={price} />
+                                <br/>
+                                <label htmlFor="quantity">Limit tickets</label>
+                                <input type="number" name="quantity" onChange={handleChange('quantity')} value={quantity} />
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="second">
+                                {/*Select Opponent*/}
+                                <label htmlFor="category">Opponent</label>
+                                <select name="category" id="category" onChange={handleChange('category')}>
+                                    <option disabled selected>Please select</option>
+                                    {/*{categories && categories.map((category, index) => (*/}
+                                    {/*    <option key={index} value={category._id}>{category.name}</option>*/}
+                                    {/*))}*/}
+                                </select>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="third">
+                                {/*Event date/time*/}
+                                789
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Col>
+                </Row>
+            </Tab.Container>
+            </>
     )
 
     // Handle error
@@ -132,10 +169,30 @@ const CreateBoxes = () => {
 
     return(
       <>
-          <h1>Create Spitbox</h1>
+          <Button onClick={handleShow}>Create Spitbox</Button>
           {showSuccess()}
           {showError()}
-          {newSpitboxForm()}
+          <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+          >
+              <Modal.Header>
+                  <ul>
+                      <li><button>I</button></li>
+                      <li><button onClick={handleClose}>X</button></li>
+                  </ul>
+              </Modal.Header>
+              <form onSubmit={handleSubmit}>
+                  <Modal.Body>
+                      {newSpitboxForm()}
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <button type="submit">Create Spitbox</button>
+                  </Modal.Footer>
+              </form>
+          </Modal>
           {goBack()}
       </>
   )

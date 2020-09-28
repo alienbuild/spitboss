@@ -119,17 +119,17 @@ const SpitboxTemplate = ({children, socket, spitboxId, setMessages}) => {
                                         </lord-icon>
                                     </a>
                                 </li>
-                                <li>
-                                    <button onClick={e => setShowRoomsModal(!showRoomsModal)}>
-                                        <lord-icon
-                                            animation="loop"
-                                            palette="#ffffff;#fecb47"
-                                            target="button"
-                                            size={'10px'}
-                                            src={`../../assets/icons/27-globe/27-globe-outline.json`}>
-                                        </lord-icon>
-                                    </button>
-                                </li>
+                                {/*<li>*/}
+                                {/*    <button onClick={e => setShowRoomsModal(!showRoomsModal)}>*/}
+                                {/*        <lord-icon*/}
+                                {/*            animation="loop"*/}
+                                {/*            palette="#ffffff;#fecb47"*/}
+                                {/*            target="button"*/}
+                                {/*            size={'10px'}*/}
+                                {/*            src={`../../assets/icons/27-globe/27-globe-outline.json`}>*/}
+                                {/*        </lord-icon>*/}
+                                {/*    </button>*/}
+                                {/*</li>*/}
                             </ul>
                         </nav>
                     </aside>
