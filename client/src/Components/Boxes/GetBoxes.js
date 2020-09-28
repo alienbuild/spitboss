@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Redirect } from 'react-router'
 import {getSpitboxRooms} from "../Spitbox/apiSpitbox";
+import {Link} from "react-router-dom";
+import CreateBoxes from "./CreateBoxes";
 
 const GetBoxes = () => {
 
@@ -8,6 +10,7 @@ const GetBoxes = () => {
     const [spitboxes, setSpitboxes] = useState([]);
     const [redirectUser, setRedirectUser] = useState(false);
     const [spitboxId, setSpitboxId] = useState();
+    const [createSpitbox, setCreateSpitbox] = useState(false);
 
     useEffect(() => {
 
@@ -26,6 +29,10 @@ const GetBoxes = () => {
         setRedirectUser(true);
     };
 
+    const handleCreateSpitbox = () => {
+        setCreateSpitbox(!createSpitbox);
+    }
+
     return (
         <>
             {redirectUser ? <Redirect
@@ -35,7 +42,8 @@ const GetBoxes = () => {
                 }}
             /> : null }
             <h1>Getting boxes.</h1>
-            {JSON.stringify(spitboxes)}
+            {/*<Link to={`/spitbox/boxes/create`}>Create Spitbox</Link>*/}
+            <button onClick={e => handleCreateSpitbox(e)}>Create Spitbox</button>
             <nav className={`box-list`}>
                 <ul>
                     {spitboxes.map((box) => (
@@ -55,6 +63,7 @@ const GetBoxes = () => {
                     ))}
                 </ul>
             </nav>
+            {createSpitbox ? <CreateBoxes /> : null}
         </>
     )
 }

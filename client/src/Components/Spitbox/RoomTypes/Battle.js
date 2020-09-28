@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import UserAvControls from "../UserAvControls";
 import {useSelector} from "react-redux";
 import OpponentAvControls from "../OpponentAvControls";
@@ -8,12 +8,28 @@ const Battle = ({ spitbox, username }) => {
     // Grab state from redux store
     const userId = useSelector(state => state.user.user.user._id);
     const participants = useSelector(state => state.spitbox.spitbox.participants);
+    const [opponent, setOpponent] = useState();
 
     const [userReady, setUserReady] = useState(false);
 
     const toggleUserReady = () => {
       setUserReady(!userReady);
     };
+
+    useEffect(() => {
+        getOpponentDetails();
+    }, [participants]);
+
+    // Get opponent details
+    const getOpponentDetails = () => {
+        let opponentId;
+        if (participants.length > 1){
+            opponentId = participants.filter((participant) => participant !== userId );
+            console.log('Filtered result is: ', opponentId);
+            setOpponent(opponentId)
+        }
+
+    }
 
     return (
         <>
@@ -36,7 +52,7 @@ const Battle = ({ spitbox, username }) => {
             <div className="feed participant-2">
             <div className="participant">
                 <div className="avatar"></div>
-                <button>{username}</button>
+                <button>{JSON.stringify(opponent)}</button>
             </div>
             <OpponentAvControls />
             <video

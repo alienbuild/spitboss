@@ -4,19 +4,23 @@ const fs = require('fs');
 const Spitbox = require('../models/spitbox');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-// Create product
+// Create Spitbox
 exports.create = (req, res) => {
+
     console.log('Doing something in spitbox controller');
+
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req,(err, fields) => {
         console.log('Ok parsing form...');
+
         // Handle errors
         if (err){
             return res.status(400).json({
                 error: 'Something went wrong.'
             })
         }
+
         // Check fields have values
         const { name, description, price, mode } = fields; // TODO: Check/add/remove fields
         // if (!name || !description || !price || !mode){
@@ -24,9 +28,11 @@ exports.create = (req, res) => {
         //         error: 'All fields are required.'
         //     })
         // }
+
         // Handle fields
         let room = new Spitbox(fields);
-        // Create/Save Spitbox Room
+
+        // Save Spitbox
         room.save((err, result) => {
             if(err){
                 return res.status(400).json({
@@ -38,8 +44,7 @@ exports.create = (req, res) => {
     })
 };
 
-
-// List spitbox rooms
+// List Spitbox rooms
 exports.list = (req, res) => {
     let order = req.query.order ? req.query.order : 'asc';
     let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
@@ -61,13 +66,13 @@ exports.list = (req, res) => {
 
 };
 
-// Find product by ID
+// Find Spitbox by ID
 exports.read = (req, res) => {
     Spitbox.findById(req.params.id)
         .exec((err, spitbox) => {
             if (err || !spitbox){
                 return res.status(400).json({
-                    error: 'Product not found.'
+                    error: 'Spitbox not found.'
                 })
             }
             res.json(spitbox)

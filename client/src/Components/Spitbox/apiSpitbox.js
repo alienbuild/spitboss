@@ -21,3 +21,14 @@ export const getSpitboxRoom = (spitboxId) => {
         })
         .catch(err => console.log('Error', err))
 };
+
+// Create Spitbox
+export const createSpitbox = () => {
+  return fetch(`${API}/spitbox/create`, {
+      method: "POST"
+  })
+      .then(response => {
+          return response.json()
+      })
+      .catch(err => console.log('Error creating spitbox. ', err))
+};

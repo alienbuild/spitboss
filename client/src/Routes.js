@@ -12,6 +12,7 @@ import Reset from "./user/Reset";
 import Spitbox from "./Components/Spitbox/spitbox"
 import PrivateRoute from "./auth/PrivateRoute";
 import GetBoxes from "./Components/Boxes/GetBoxes";
+import CreateBoxes from "./Components/Boxes/CreateBoxes";
 
 const Routes = () => {
     return (
@@ -22,7 +23,7 @@ const Routes = () => {
                 </Helmet>
                 <Switch>
 
-                    <PrivateRoute path={`/spitbox/boxes`} exact component={GetBoxes} />
+                    <PrivateRoute path={`/spitbox/spitboxes`} exact component={GetBoxes} />
                     <PrivateRoute path={`/spitbox/:id`} exact component={Spitbox} />
 
                     <Route path="/signup" exact component={Signup} />

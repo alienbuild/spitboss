@@ -1,3 +1,11 @@
+
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap';
+
+// Utils
+@import 'utils';
+
 // Branding
 $light-background: #433a55;
 $dark-background: #171420;
@@ -9,9 +17,6 @@ $green: #01AD26;
 
 // Reset
 @import 'reset';
-
-// Utils
-@import 'utils';
 
 // Typography
 @import 'typography';
