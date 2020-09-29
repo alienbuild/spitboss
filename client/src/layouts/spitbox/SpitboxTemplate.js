@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import GameAnnouncer from "../../Components/Spitbox/GameAnnouncer";
 
 import { loadAnimation } from 'lottie-web';
-import { defineLordIconElement } from 'lord-icon-element';
+import { defineLordIconElement } from 'alienbuild-icon-element';
 import SpitbossLogo from '../../assets/images/spitboss.svg';
 import ModalRooms from "../../Components/Spitbox/ModalRooms";
 import {getSpitboxRoom} from "../../Components/Spitbox/apiSpitbox";
@@ -53,7 +53,7 @@ const SpitboxTemplate = ({children, socket, spitboxId, setMessages}) => {
     },[socket]);
 
     const streamCamVideo = () => {
-        const constraints = { audio: true, video: { width: 1280, height: 720 } };
+        const constraints = { audio: true, video: true };
         navigator.mediaDevices
             .getUserMedia(constraints)
             .then(function(mediaStream) {
@@ -119,17 +119,28 @@ const SpitboxTemplate = ({children, socket, spitboxId, setMessages}) => {
                                         </lord-icon>
                                     </a>
                                 </li>
-                                {/*<li>*/}
-                                {/*    <button onClick={e => setShowRoomsModal(!showRoomsModal)}>*/}
-                                {/*        <lord-icon*/}
-                                {/*            animation="loop"*/}
-                                {/*            palette="#ffffff;#fecb47"*/}
-                                {/*            target="button"*/}
-                                {/*            size={'10px'}*/}
-                                {/*            src={`../../assets/icons/27-globe/27-globe-outline.json`}>*/}
-                                {/*        </lord-icon>*/}
-                                {/*    </button>*/}
-                                {/*</li>*/}
+                                <li>
+                                    <a href={`/spitbox/spitboxes`}>
+                                        <lord-icon
+                                            animation="loop"
+                                            palette="#ffffff;#fecb47"
+                                            target="a"
+                                            size={'10px'}
+                                            src={`../../assets/icons/63-home-outline/63-home-outline.json`}>
+                                        </lord-icon>
+                                    </a>
+                                </li>
+                                <li>
+                                    <button onClick={e => setShowRoomsModal(!showRoomsModal)}>
+                                        <lord-icon
+                                            animation="loop"
+                                            palette="#ffffff;#fecb47"
+                                            target="button"
+                                            size={'10px'}
+                                            src={`../../assets/icons/27-globe/27-globe-outline.json`}>
+                                        </lord-icon>
+                                    </button>
+                                </li>
                             </ul>
                         </nav>
                     </aside>

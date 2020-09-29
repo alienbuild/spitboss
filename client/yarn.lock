@@ -2079,6 +2079,10 @@ ajv@^6.12.2:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+"alienbuild-icon-element@https://github.com/alienbuild/lord-icon-element.git":
+  version "1.2.3"
+  resolved "https://github.com/alienbuild/lord-icon-element.git#0f88dcdb1ddff82f421e6d3f140c79b8c9ef0a97"
+
 alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
@@ -7037,11 +7041,6 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
-
-lord-icon-element@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/lord-icon-element/-/lord-icon-element-1.2.3.tgz#905f8f53c3e43b7b58d04cdbdf2d968e863f692e"
-  integrity sha512-lJHsVJJn49F6U0SP4V+6Fma8JPcA49z47Jqh4owhTL2ghGMOge1Z5FbKA332zBFqmbm4Q+KB+E+suWP45JD5RA==
 
 lottie-web@^5.7.3:
   version "5.7.3"

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
 import { createSpitbox } from "../Spitbox/apiSpitbox";
+import SpitbossLogo from '../../assets/images/spitboss.svg';
 
 // Bootstrap imports
 import Row from "react-bootstrap/cjs/Row";
@@ -82,25 +83,51 @@ const CreateBoxes = () => {
     // Form markup
     const newSpitboxForm = () => (
         <>
+            <img src={SpitbossLogo} alt="Spitboss Logo" className={`create-spitbox-logo`}/>
             <h2>Create your Spitbox</h2>
+            <small>Your Spitbox will not become active until your opponent accepts your challenge.</small>
             <Tab.Container id="left-tabs-example">
                 <Row>
                     <Col sm={12}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
                                 <Nav.Link eventKey="first">
+                                    <div className="horizontal-icon">
+                                        <lord-icon
+                                            target={'a'}
+                                            animation="loop"
+                                            palette="#8c8895;#8c8895"
+                                            src={`../../assets/icons/40-gears-settings-double/40-gears-settings-double-solid.json`}>
+                                        </lord-icon>
+                                    </div>
                                     Spitbox Settings
                                     <small>Set the mode, ticket price and other specifics.</small>
                                 </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link eventKey="second">
+                                    <div className="horizontal-icon">
+                                        <lord-icon
+                                            target={'a'}
+                                            animation="loop"
+                                            palette="#8c8895;#8c8895"
+                                            src={`../../assets/icons/134-target/134-target-solid.json`}>
+                                        </lord-icon>
+                                    </div>
                                     Who is being challenged?
                                     <small>Select opponent...</small>
                                 </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link eventKey="third">
+                                    <div className="horizontal-icon">
+                                        <lord-icon
+                                            target={'a'}
+                                            animation="loop"
+                                            palette="#8c8895;#8c8895"
+                                            src={`../../assets/icons/45-clock-time/45-clock-time-solid.json`}>
+                                        </lord-icon>
+                                    </div>
                                     Start time
                                     <small>Now</small>
                                 </Nav.Link>
@@ -180,8 +207,14 @@ const CreateBoxes = () => {
           >
               <Modal.Header>
                   <ul>
-                      <li><button>I</button></li>
-                      <li><button onClick={handleClose}>X</button></li>
+                      <li><button onClick={handleClose}>
+                          <lord-icon
+                              animation="loop"
+                              target="button"
+                              palette="#8c8895;#8c8895"
+                              src={`../../assets/icons/38-error-cross-simple-outline/38-error-cross-simple-outline.json`}>
+                          </lord-icon>
+                      </button></li>
                   </ul>
               </Modal.Header>
               <form onSubmit={handleSubmit}>

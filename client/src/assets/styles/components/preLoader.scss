@@ -9,6 +9,7 @@
   opacity: 1;
   transition: 0.3s all;
   background:  #000 url('../../images/preloader-bg.png');
+  background: darken($dark-background, 6%);
   overflow: hidden;
   display: flex;
   justify-content: center;
