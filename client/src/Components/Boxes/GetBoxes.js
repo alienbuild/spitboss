@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Redirect } from 'react-router'
 import {getSpitboxRooms} from "../Spitbox/apiSpitbox";
 import {Link} from "react-router-dom";
-import CreateBoxes from "./CreateBoxes";
+import CreateBoxes from "./Create/CreateBoxes";
 
 const GetBoxes = () => {
 

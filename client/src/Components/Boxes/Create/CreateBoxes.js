@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { isAuthenticated } from "../../auth";
-import { createSpitbox } from "../Spitbox/apiSpitbox";
-import SpitbossLogo from '../../assets/images/spitboss.svg';
+import { isAuthenticated } from "../../../auth";
+import { createSpitbox } from "../../Spitbox/apiSpitbox";
+import SpitbossLogo from '../../../assets/images/spitboss.svg';
 
 // Bootstrap imports
 import Row from "react-bootstrap/cjs/Row";
@@ -11,6 +11,8 @@ import Nav from "react-bootstrap/cjs/Nav";
 import Modal from "react-bootstrap/cjs/Modal";
 import Button from "react-bootstrap/cjs/Button";
 import Tab from "react-bootstrap/cjs/Tab";
+import SelectOpponent from "./SelectOpponent";
+import SpitboxSettings from "./SpitboxSettings";
 
 const CreateBoxes = () => {
 
@@ -86,6 +88,7 @@ const CreateBoxes = () => {
     });
 
     const translateModal = (e, screen) => {
+        e.preventDefault();
         const modalScreen = document.querySelector(`.screen-${screen}`);
         const height = modalScreen.offsetHeight;
 
@@ -103,6 +106,7 @@ const CreateBoxes = () => {
                     screen,
                     translate:'translateX(-100%) translateZ(1px)'
                 })
+            break;
             default:
                 setMoveModal({
                     screen
@@ -122,17 +126,17 @@ const CreateBoxes = () => {
                     <nav className="create-spitbox-settings">
                         <ul>
                             <li>
-                                <button onClick={e => translateModal(e, 'settings')}>
+                                <button onClick={e => translateModal(e, 'select-opponent')}>
                                     <div className="horizontal-icon">
                                         <lord-icon
                                             target={'button'}
                                             animation="loop"
                                             palette="#8c8895;#8c8895"
-                                            src={`../../assets/icons/40-gears-settings-double/40-gears-settings-double-solid.json`}>
+                                            src={`../../assets/icons/134-target/134-target-solid.json`}>
                                         </lord-icon>
                                     </div>
-                                    Spitbox Settings
-                                    <small>Set the mode, ticket price and other specifics.</small>
+                                    Select Opponent
+                                    <small>Who do you want to challenge?</small>
                                     <span className="arrow-right">
                                         <lord-icon
                                             target={'button'}
@@ -144,17 +148,17 @@ const CreateBoxes = () => {
                                 </button>
                             </li>
                             <li>
-                                <button onClick={e => translateModal(e, 'select-opponent')}>
+                                <button onClick={e => translateModal(e, 'settings')}>
                                     <div className="horizontal-icon">
                                         <lord-icon
                                             target={'button'}
                                             animation="loop"
                                             palette="#8c8895;#8c8895"
-                                            src={`../../assets/icons/134-target/134-target-solid.json`}>
+                                            src={`../../assets/icons/40-gears-settings-double/40-gears-settings-double-solid.json`}>
                                         </lord-icon>
                                     </div>
-                                    Who is being challenged?
-                                    <small>Select opponent...</small>
+                                    Spitbox Settings
+                                    <small>Set the box mode, ppv ticket price and other specifics.</small>
                                     <span className="arrow-right">
                                         <lord-icon
                                             target={'button'}
@@ -175,7 +179,7 @@ const CreateBoxes = () => {
                                             src={`../../assets/icons/45-clock-time/45-clock-time-solid.json`}>
                                         </lord-icon>
                                     </div>
-                                    Start time
+                                    Event launch
                                     <small>Now</small>
                                     <span className="arrow-right">
                                         <lord-icon
@@ -223,41 +227,12 @@ const CreateBoxes = () => {
         </>
     )
 
-    // Spitbox Settings Modal
-    const spitboxSettingsMarkup = () => {
-        return(
-            <div className={`translate-this screen-settings`} style={ moveModal.screen ==='settings' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden'} }>
-                <button onClick={e => {
-                    translateModal(e, 'default')
-                    setMoveModal({
-                        screen: 'default'
-                    })
-                }}>Go Back</button>
-                Second content.
-            </div>
-        )
-    }
-
-    // Select Opponent Modal
-    const spitboxSelectOpponentMarkup = () => {
-        return(
-            <div className={`translate-this screen-select-opponent`} style={ moveModal.screen ==='select-opponent' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden' } }>
-                <button onClick={e => {
-                    translateModal(e, 'default')
-                    setMoveModal({
-                        screen: 'default'
-                    })
-                }}>Go Back</button>
-                Third content.
-            </div>
-        )
-    }
-
     // Event Modal
     const spitboxEventDateMarkup = () => {
         return(
             <div className={`translate-this screen-event-date`} style={ moveModal.screen ==='event-date' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)' , visibility: 'hidden'} }>
                 <button onClick={e => {
+                    e.preventDefault();
                     translateModal(e, 'default')
                     setMoveModal({
                         screen: 'default'
@@ -329,8 +304,8 @@ const CreateBoxes = () => {
                       </Modal.Footer>
                   </form>
               </div>
-              {spitboxSettingsMarkup()}
-              {spitboxSelectOpponentMarkup()}
+              <SelectOpponent moveModal={moveModal} setMoveModal={setMoveModal} translateModal={translateModal} handleClose={handleClose} />
+              <SpitboxSettings moveModal={moveModal} setMoveModal={setMoveModal} translateModal={translateModal} handleClose={handleClose} />
               {spitboxEventDateMarkup()}
           </Modal>
           {goBack()}

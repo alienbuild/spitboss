@@ -15,6 +15,18 @@ exports.userById = (req, res, next, id) => {
     })
 };
 
+// List Users
+exports.list = (req,res) => {
+    User.find().exec((err, data) => {
+        if (err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            })
+        }
+        res.json(data);
+    })
+};
+
 // Get user
 exports.read = (req,res) => {
     req.profile.hashed_password = undefined;

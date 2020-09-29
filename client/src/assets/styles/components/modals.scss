@@ -70,16 +70,21 @@
     .modal-footer{
       border: none;
       padding: 0;
-      button{
+      button[type="submit"]{
         display: block;
         border: none;
         width: 100%;
-        background: $text;
+        background: $yellow;
         border-radius: 5px;
         padding: 5px;
         font-size: 14px;
         color: $dark-background;
         font-weight: bold;
+        transition: 0.3s all;
+        &:hover{
+          background: lighten($yellow, 5%);
+          transition: 0.3s all;
+        }
       }
     }
   }

@@ -54,3 +54,20 @@
     }
   }
 }
+
+.translate-this{ width: 100%; }
+.members-select-list{
+  li{
+    display: block;
+    .list-avatar{
+
+    }
+    .list-name{
+      color: #fff;
+    }
+    .list-checkbox{
+      width: 44px;
+      height: 44px;
+    }
+  }
+}

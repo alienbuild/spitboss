@@ -9,10 +9,10 @@ import Signin from './user/Signin'
 import Signup from "./user/Signup";
 import Forgot from "./user/Forgot";
 import Reset from "./user/Reset";
-import Spitbox from "./Components/Spitbox/spitbox"
+import Spitbox from "./Components/Spitbox/Spitbox"
 import PrivateRoute from "./auth/PrivateRoute";
 import GetBoxes from "./Components/Boxes/GetBoxes";
-import CreateBoxes from "./Components/Boxes/CreateBoxes";
+import CreateBoxes from "./Components/Boxes/Create/CreateBoxes";
 
 const Routes = () => {
     return (
