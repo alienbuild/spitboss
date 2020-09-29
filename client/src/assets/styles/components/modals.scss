@@ -15,8 +15,13 @@
   .modal-content{
     background: $dark-background;
     border: 1px solid $light-background;
-    padding: 10px 20px;
     border-radius: 10px;
+    padding: 0;
+    overflow: hidden;
+    .translate-this{
+      padding: 10px 20px;
+      transition: 0.3s all;
+    }
     .modal-header{
       border: none;
       padding: 0;
@@ -56,35 +61,7 @@
         .nav-item{
           height: 60px;
           .nav-link{
-            color: #fff;
-            padding: 10px;
-            transition: 0.1s all;
-            .horizontal-icon{
-              height: 30px;
-              width: 30px;
-              background: $light-background;
-              border-radius: 50%;
-              display: inline-block;
-              float: left;
-              margin-right: 10px;
-              display: flex;
-              vertical-align: middle;
-              margin-top: 7px;
-              lord-icon{
-                height: 25px;
-                width: 25px;
-                margin: auto;
-              }
-            }
-            &:hover{
-              background: darken($light-background, 10%);
-              transition: 0.2s all;
-            }
-            small{
-              color: $text;
-              display: block;
-              text-align: left;
-            }
+
           }
         }
       }

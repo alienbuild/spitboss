@@ -1,0 +1,46 @@
+.create-spitbox-settings{
+  margin: 20px 0;
+  ul{
+    li{
+      color: #fff;
+      transition: 0.1s all;
+      .horizontal-icon{
+        height: 36px;
+        width: 36px;
+        background: $light-background;
+        border-radius: 50%;
+        float: left;
+        margin-right: 10px;
+        display: flex;
+        vertical-align: middle;
+        margin-top: 5px;
+        lord-icon{
+          height: 30px;
+          width: 30px;
+          margin: auto;
+        }
+      }
+      small{
+        color: $text;
+        display: block;
+        text-align: left;
+      }
+      button{
+        background: $dark-background;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        border-radius: 5px;
+        color: #fff;
+        &:hover{
+          background: darken($light-background, 10%);
+          transition: 0.2s all;
+        }
+        .horizontal-icon{
+          background: $light-background;
+        }
+      }
+    }
+  }
+}
