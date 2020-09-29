@@ -86,6 +86,11 @@ const CreateBoxes = () => {
     });
 
     const translateModal = (e, screen) => {
+        const modalScreen = document.querySelector(`.screen-${screen}`);
+        const height = modalScreen.offsetHeight;
+
+        e.target.closest('.modal-content').style.height = height + 'px';
+
         switch (screen){
             case 'settings':
                 setMoveModal({
@@ -221,8 +226,9 @@ const CreateBoxes = () => {
     // Spitbox Settings Modal
     const spitboxSettingsMarkup = () => {
         return(
-            <div className={`translate-this screen-2`} style={ moveModal.screen ==='settings' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden'} }>
+            <div className={`translate-this screen-settings`} style={ moveModal.screen ==='settings' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden'} }>
                 <button onClick={e => {
+                    translateModal(e, 'default')
                     setMoveModal({
                         screen: 'default'
                     })
@@ -235,8 +241,9 @@ const CreateBoxes = () => {
     // Select Opponent Modal
     const spitboxSelectOpponentMarkup = () => {
         return(
-            <div className={`translate-this screen-3`} style={ moveModal.screen ==='select-opponent' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden' } }>
+            <div className={`translate-this screen-select-opponent`} style={ moveModal.screen ==='select-opponent' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden' } }>
                 <button onClick={e => {
+                    translateModal(e, 'default')
                     setMoveModal({
                         screen: 'default'
                     })
@@ -249,8 +256,9 @@ const CreateBoxes = () => {
     // Event Modal
     const spitboxEventDateMarkup = () => {
         return(
-            <div className={`translate-this screen-4`} style={ moveModal.screen ==='event-date' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)' , visibility: 'hidden'} }>
+            <div className={`translate-this screen-event-date`} style={ moveModal.screen ==='event-date' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)' , visibility: 'hidden'} }>
                 <button onClick={e => {
+                    translateModal(e, 'default')
                     setMoveModal({
                         screen: 'default'
                     })
@@ -299,7 +307,7 @@ const CreateBoxes = () => {
               centered
 
           >
-              <div className="translate-this screen-1" style={ moveModal.screen ==='default' ? { transform: 'translateX(0%) translateZ(1px)' } : { transform:'translateX(-100%) translateZ(1px)', visibility: 'hidden'} }>
+              <div className="translate-this screen-default" style={ moveModal.screen ==='default' ? { transform: 'translateX(0%) translateZ(1px)' } : { transform:'translateX(-100%) translateZ(1px)', visibility: 'hidden'} }>
                   <Modal.Header>
                       <ul>
                           <li><button onClick={handleClose}>
