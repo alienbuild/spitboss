@@ -20,6 +20,15 @@
           margin: auto;
         }
       }
+      .arrow-right{
+        position: absolute;
+        right: 0px;
+        top: 15px;
+        lord-icon{
+          height: 30px;
+          width: 40px;
+        }
+      }
       small{
         color: $text;
         display: block;
@@ -33,6 +42,7 @@
         text-align: left;
         border-radius: 5px;
         color: #fff;
+        position: relative;
         &:hover{
           background: darken($light-background, 10%);
           transition: 0.2s all;

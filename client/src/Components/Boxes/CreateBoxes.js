@@ -128,6 +128,14 @@ const CreateBoxes = () => {
                                     </div>
                                     Spitbox Settings
                                     <small>Set the mode, ticket price and other specifics.</small>
+                                    <span className="arrow-right">
+                                        <lord-icon
+                                            target={'button'}
+                                            animation="loop"
+                                            palette="#8c8895;#8c8895"
+                                            src={`../../assets/icons/31-arrow-right/31-arrow-right-outline.json`}>
+                                        </lord-icon>
+                                    </span>
                                 </button>
                             </li>
                             <li>
@@ -142,6 +150,14 @@ const CreateBoxes = () => {
                                     </div>
                                     Who is being challenged?
                                     <small>Select opponent...</small>
+                                    <span className="arrow-right">
+                                        <lord-icon
+                                            target={'button'}
+                                            animation="loop"
+                                            palette="#8c8895;#8c8895"
+                                            src={`../../assets/icons/31-arrow-right/31-arrow-right-outline.json`}>
+                                        </lord-icon>
+                                    </span>
                                 </button>
                             </li>
                             <li>
@@ -156,6 +172,14 @@ const CreateBoxes = () => {
                                     </div>
                                     Start time
                                     <small>Now</small>
+                                    <span className="arrow-right">
+                                        <lord-icon
+                                            target={'button'}
+                                            animation="loop"
+                                            palette="#8c8895;#8c8895"
+                                            src={`../../assets/icons/31-arrow-right/31-arrow-right-outline.json`}>
+                                        </lord-icon>
+                                    </span>
                                 </button>
                             </li>
                         </ul>
