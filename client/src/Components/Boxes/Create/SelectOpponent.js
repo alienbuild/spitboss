@@ -120,7 +120,7 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                                     <Col>
                                         <span className="select-members__checkbox">
                                             <lord-icon
-                                                animation="click"
+                                                animation="custom"
                                                 target="button"
                                                 palette="#8c8895;#fecb47"
                                                 src={`../../assets/icons/388-check-box-3-morph/388-check-box-3-morph.json`}>

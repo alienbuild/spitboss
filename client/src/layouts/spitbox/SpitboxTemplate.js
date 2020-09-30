@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import GameAnnouncer from "../../Components/Spitbox/GameAnnouncer";
-
-import { loadAnimation } from 'lottie-web';
-import { defineLordIconElement } from 'alienbuild-icon-element';
 import SpitbossLogo from '../../assets/images/spitboss.svg';
 import ModalRooms from "../../Components/Spitbox/ModalRooms";
 import {getSpitboxRoom} from "../../Components/Spitbox/apiSpitbox";
@@ -11,8 +8,13 @@ import {saveSpitboxRoom} from "../../actions/spitboxActions";
 import Battle from "../../Components/Spitbox/RoomTypes/Battle";
 import PassThe40 from "../../Components/Spitbox/RoomTypes/PassThe40";
 import PreLoader from "../../Components/Spitbox/PreLoader";
+import {defineLordIconElement, LordIconElement} from "alienbuild-icon-element";
+import {loadAnimation} from "lottie-web";
+import Custom from "../../utils/customAnimationIcons";
 
-// register lottie and define custom element
+// Custom Animated Icon Shiz.
+import CustomAnimationIcons from "../../utils/customAnimationIcons";
+LordIconElement.registerAnimation('custom', CustomAnimationIcons);
 defineLordIconElement(loadAnimation);
 
 const SpitboxTemplate = ({children, socket, spitboxId, setMessages}) => {

@@ -12,7 +12,6 @@ import Reset from "./user/Reset";
 import Spitbox from "./Components/Spitbox/Spitbox"
 import PrivateRoute from "./auth/PrivateRoute";
 import GetBoxes from "./Components/Boxes/GetBoxes";
-import CreateBoxes from "./Components/Boxes/Create/CreateBoxes";
 
 const Routes = () => {
     return (
