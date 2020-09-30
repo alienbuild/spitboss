@@ -44,6 +44,51 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
         return opponent.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
     })
 
+    const bah = () => {
+        if (opponents && filteredUsers < 1){
+            return <small style={{
+                color: '#8c8895',
+                textAlign: 'center'
+            }}>No users found matching <strong><i>'{search}'</i></strong>.</small>
+        } else {
+            return opponents && filteredUsers.map((opponent, index) => {
+                 return <li key={index} className={`select-members__item`}>
+                    <button className={`select-members__button`} onClick={() => {
+                        const { name, _id } = opponent;
+                        setValues({
+                            ...values,
+                            opponent: {
+                                _id,
+                                name
+                            }
+                        })
+                    }}>
+                        <Row className={`align-items-center`}>
+                            <Col md={1}>
+                                        <span className="select-members__avatar">
+                                            <img src="https://fakeimg.pl/36x36/333/fff" className={`select-members__image`}/>
+                                        </span>
+                            </Col>
+                            <Col md={8}>
+                                <span className="select-members__name">{opponent.name}</span>
+                            </Col>
+                            <Col>
+                                        <span className="select-members__checkbox">
+                                            <lord-icon
+                                                animation="custom"
+                                                target="button"
+                                                palette="#8c8895;#fecb47"
+                                                src={`../../assets/icons/388-check-box-3-morph/388-check-box-3-morph.json`}>
+                                            </lord-icon>
+                                        </span>
+                            </Col>
+                        </Row>
+                    </button>
+                </li>
+            })
+        }
+    }
+
     return(
         <div className={`translate-this screen-select-opponent modal-inner`} style={ moveModal.screen ==='select-opponent' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden' } }>
             <Modal.Header className={`modal-inner__header`}>
@@ -96,41 +141,7 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                            onChange={e => handleSearchInput(e)}/>
                 </div>
                 <ul className={`select-members__list`}>
-                    {opponents && filteredUsers.map((opponent, index) => (
-                        <li key={index} className={`select-members__item`}>
-                            <button className={`select-members__button`} onClick={() => {
-                                const { name, _id } = opponent;
-                                setValues({
-                                    ...values,
-                                    opponent: {
-                                        _id,
-                                        name
-                                    }
-                                })
-                            }}>
-                                <Row className={`align-items-center`}>
-                                    <Col md={1}>
-                                        <span className="select-members__avatar">
-                                            <img src="https://fakeimg.pl/36x36/333/fff" className={`select-members__image`}/>
-                                        </span>
-                                    </Col>
-                                    <Col md={8}>
-                                        <span className="select-members__name">{opponent.name}</span>
-                                    </Col>
-                                    <Col>
-                                        <span className="select-members__checkbox">
-                                            <lord-icon
-                                                animation="custom"
-                                                target="button"
-                                                palette="#8c8895;#fecb47"
-                                                src={`../../assets/icons/388-check-box-3-morph/388-check-box-3-morph.json`}>
-                                            </lord-icon>
-                                        </span>
-                                    </Col>
-                                </Row>
-                            </button>
-                        </li>
-                    ))}
+                    {bah()}
                 </ul>
             </Modal.Body>
             <Modal.Footer className={`modal-inner__footer`}>
