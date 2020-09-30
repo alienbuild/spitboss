@@ -13,6 +13,7 @@ import Button from "react-bootstrap/cjs/Button";
 import Tab from "react-bootstrap/cjs/Tab";
 import SelectOpponent from "./SelectOpponent";
 import SpitboxSettings from "./SpitboxSettings";
+import Badge from "react-bootstrap/cjs/Badge";
 
 const CreateBoxes = () => {
 
@@ -20,6 +21,37 @@ const CreateBoxes = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [moveModal, setMoveModal] = useState({
+        screen: 'default',
+        translate: 'translateX(0%) translateZ(1px)'
+    });
+    const translateModal = (e, screen) => {
+        e.preventDefault();
+        const modalScreen = document.querySelector(`.screen-${screen}`);
+        const height = modalScreen.offsetHeight;
+
+        e.target.closest('.modal-content').style.height = height + 'px';
+
+        switch (screen){
+            case 'settings':
+                setMoveModal({
+                    screen,
+                    translate:'translateX(-100%) translateZ(1px)'
+                })
+                break;
+            case 'select-opponent':
+                setMoveModal({
+                    screen,
+                    translate:'translateX(-100%) translateZ(1px)'
+                })
+                break;
+            default:
+                setMoveModal({
+                    screen
+                })
+                break;
+        }
+    }
 
     // Init state
     const [values, setValues] = useState({
@@ -27,6 +59,7 @@ const CreateBoxes = () => {
         description: '',
         price: '',
         participants: [],
+        opponent: '',
         quantity: '',
         loading: false,
         error: '',
@@ -57,64 +90,6 @@ const CreateBoxes = () => {
         setValues({ ...values, [name]: value });
     };
 
-    // Handle form submit
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setValues({...values, error: '', loading: true});
-        console.log('Form data is', formData);
-
-        createSpitbox(user._id, token, formData)
-            .then(data => {
-                if (data.error){
-                    setValues({...values, error: data.error})
-                } else {
-                    setValues({
-                        ...values,
-                        name: '',
-                        description: '',
-                        price: '',
-                        quantity: '',
-                        loading: false,
-                        createdSpitbox: data.name
-                    })
-                }
-            })
-            .catch(err => console.log('FE error handleSubmit / Create Spitbox: ', err))
-    };
-
-    const [moveModal, setMoveModal] = useState({
-        screen: 'default',
-        translate: 'translateX(0%) translateZ(1px)'
-    });
-
-    const translateModal = (e, screen) => {
-        e.preventDefault();
-        const modalScreen = document.querySelector(`.screen-${screen}`);
-        const height = modalScreen.offsetHeight;
-
-        e.target.closest('.modal-content').style.height = height + 'px';
-
-        switch (screen){
-            case 'settings':
-                setMoveModal({
-                    screen,
-                    translate:'translateX(-100%) translateZ(1px)'
-                })
-            break;
-            case 'select-opponent':
-                setMoveModal({
-                    screen,
-                    translate:'translateX(-100%) translateZ(1px)'
-                })
-            break;
-            default:
-                setMoveModal({
-                    screen
-                })
-            break;
-        }
-    }
-
     // Form markup
     const newSpitboxForm = () => (
         <>
@@ -136,7 +111,7 @@ const CreateBoxes = () => {
                                         </lord-icon>
                                     </div>
                                     Select Opponent
-                                    <small>Who do you want to challenge?</small>
+                                    <small>{values.opponent ? <Badge variant={"secondary"}>{values.opponent.name}</Badge> : 'Who do you want to challenge?'}</small>
                                     <span className="arrow-right">
                                         <lord-icon
                                             target={'button'}
@@ -227,6 +202,31 @@ const CreateBoxes = () => {
         </>
     )
 
+    // Handle form submit
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setValues({...values, error: '', loading: true});
+        console.log('Form data is', formData);
+
+        createSpitbox(user._id, token, formData)
+            .then(data => {
+                if (data.error){
+                    setValues({...values, error: data.error})
+                } else {
+                    setValues({
+                        ...values,
+                        name: '',
+                        description: '',
+                        price: '',
+                        quantity: '',
+                        loading: false,
+                        createdSpitbox: data.name
+                    })
+                }
+            })
+            .catch(err => console.log('FE error handleSubmit / Create Spitbox: ', err))
+    };
+
     // Event Modal
     const spitboxEventDateMarkup = () => {
         return(
@@ -283,17 +283,15 @@ const CreateBoxes = () => {
 
           >
               <div className="translate-this screen-default" style={ moveModal.screen ==='default' ? { transform: 'translateX(0%) translateZ(1px)' } : { transform:'translateX(-100%) translateZ(1px)', visibility: 'hidden'} }>
-                  <Modal.Header>
-                      <ul>
-                          <li><button onClick={handleClose}>
-                              <lord-icon
-                                  animation="loop"
-                                  target="button"
-                                  palette="#8c8895;#8c8895"
-                                  src={`../../assets/icons/38-error-cross-simple-outline/38-error-cross-simple-outline.json`}>
-                              </lord-icon>
-                          </button></li>
-                      </ul>
+                  <Modal.Header className={`modal__header`}>
+                      <button className={`modal__button modal__button--right`} onClick={handleClose}>
+                          <lord-icon
+                              animation="loop"
+                              target="button"
+                              palette="#8c8895;#8c8895"
+                              src={`../../assets/icons/38-error-cross-simple-outline/38-error-cross-simple-outline.json`}>
+                          </lord-icon>
+                      </button>
                   </Modal.Header>
                   <form onSubmit={handleSubmit}>
                       <Modal.Body>
@@ -304,8 +302,8 @@ const CreateBoxes = () => {
                       </Modal.Footer>
                   </form>
               </div>
-              <SelectOpponent moveModal={moveModal} setMoveModal={setMoveModal} translateModal={translateModal} handleClose={handleClose} />
-              <SpitboxSettings moveModal={moveModal} setMoveModal={setMoveModal} translateModal={translateModal} handleClose={handleClose} />
+              <SelectOpponent values={values} setValues={setValues} moveModal={moveModal} setMoveModal={setMoveModal} translateModal={translateModal} handleClose={handleClose} />
+              <SpitboxSettings values={values} setValues={setValues} moveModal={moveModal} setMoveModal={setMoveModal} translateModal={translateModal} handleClose={handleClose} />
               {spitboxEventDateMarkup()}
           </Modal>
           {goBack()}

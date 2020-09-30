@@ -5,7 +5,6 @@
     margin: auto;
     display: block;
     text-align: center;
-    margin-top: -30px;
   }
   small{
     display: block;
@@ -20,37 +19,21 @@
     overflow: hidden;
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.8);
     .translate-this{
-      padding: 10px 20px;
       transition: 0.3s all;
     }
     .modal-header{
       border: none;
-      padding: 0;
-      justify-content: flex-end;
+      display: block;
       ul{
         li{
           display: inline-block;
           margin-right: 10px;
           &:last-child { margin-right: 0; }
-          button{
-            border: none;
-            background: none;
-            color: #fff;
-            height: 36px;
-            width: 36px;
-            background: $light-background;
-            border-radius: 50%;
-            transition: 0.6s all;
-            &:hover{
-              background: lighten($light-background, 10%);
-              transition: 0.3s all;
-            }
-          }
+
         }
       }
     }
     .modal-body{
-      padding: 0;
       h2{
         text-align: center;
         font-size: 20px;
@@ -69,7 +52,6 @@
     }
     .modal-footer{
       border: none;
-      padding: 0;
       button[type="submit"]{
         display: block;
         border: none;
@@ -86,6 +68,138 @@
           transition: 0.3s all;
         }
       }
+    }
+  }
+}
+
+.modal, .modal-inner {
+  .modal-body{
+    padding: 10px 20px;
+  }
+  .modal-footer{
+    padding: 10px;
+  }
+  &__button{
+    border: none;
+    background: none;
+    color: #fff;
+    height: 36px;
+    width: 36px;
+    background: $light-background;
+    border-radius: 50%;
+    transition: 0.6s all;
+    &:hover{
+      background: lighten($light-background, 10%);
+      transition: 0.3s all;
+    }
+    &--left{
+      float: left;
+    }
+    &--right{
+      float: right;
+    }
+  }
+}
+.modal{
+  &__header{
+    border: none;
+    padding: 10px;
+  }
+}
+
+.modal-inner{
+  &__header{
+    text-align: center;
+    border-bottom: 1px solid $light-background;
+    padding-bottom: 10px;
+  }
+  &__footer{
+    border-top: 1px solid darken($light-background,10%)!important; //TODO: Eugh?
+  }
+  &__footer-button{
+    display: block;
+    width: 100%;
+  }
+  &__title{
+    color: #fff;
+  }
+  &__search{
+    position: relative;
+  }
+  &__search-icon{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 44px;
+    height: 44px;
+    lord-icon{
+      height: 30px;
+      width: 30px;
+    }
+  }
+  &__input{
+    background: $light-background;
+    border: none;
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    color: #ffffff;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    &:focus{ outline: none; }
+  }
+}
+
+// TODO: Place into a list file
+.select-members{
+  text-align: left;
+  &__list{
+    height: 300px;
+    width: 100%;
+    overflow: auto;
+  }
+  &__item{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+  &__button{
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 5px;
+    text-align: left;
+    &:hover{
+      background: darken($light-background, 10%);
+      transition: 0.2s all;
+    }
+  }
+  &__avatar{
+    border-radius: 50%;
+    overflow: hidden;
+    height: 35px;
+    width: 35px;
+    display: block;
+  }
+  &__image{
+  }
+  &__name{
+    color: #fff;
+    font-weight: 600;
+    padding: 0 10px;
+  }
+  &__checkbox{
+    border: none;
+    background: none;
+    text-align: right;
+    float: right;
+    lord-icon{
+      height: 30px;
+      width: 30px;
     }
   }
 }

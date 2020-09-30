@@ -3,9 +3,6 @@
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap';
 
-// Utils
-@import 'utils';
-
 // Branding
 $light-background: #433a55;
 $dark-background: #171420;
@@ -15,11 +12,30 @@ $red: #e5251f;
 $yellow: #fecb47;
 $green: #01AD26;
 
+$primary:       $yellow;
+$secondary:     $red;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+
+.badge-secondary{
+  background: $secondary;
+  padding: 0.25em 1em;
+}
+// Utils
+@import 'utils';
+
 // Reset
 @import 'reset';
 
 // Typography
 @import 'typography';
+
+// Buttons
+@import 'buttons';
 
 // Components -> Spitbox
 @import 'components/spitbox';

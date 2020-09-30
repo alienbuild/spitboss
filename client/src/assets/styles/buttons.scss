@@ -1,0 +1,15 @@
+.btn{
+  border: none;
+  &-primary{
+    background: $yellow;
+    font-size: 14px;
+    color: $dark-background;
+    font-weight: bold;
+    transition: 0.3s all;
+    &:hover{
+      color: $dark-background;
+      background: lighten($yellow, 5%);
+      transition: 0.3s all;
+    }
+  }
+}
