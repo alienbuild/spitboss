@@ -44,7 +44,7 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
         return opponent.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
     })
 
-    const bah = () => {
+    const filterUsers = () => {
         if (opponents && filteredUsers < 1){
             return <small style={{
                 color: '#8c8895',
@@ -141,7 +141,7 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                            onChange={e => handleSearchInput(e)}/>
                 </div>
                 <ul className={`select-members__list`}>
-                    {bah()}
+                    {filterUsers()}
                 </ul>
             </Modal.Body>
             <Modal.Footer className={`modal-inner__footer`}>
