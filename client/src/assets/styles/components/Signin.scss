@@ -1,0 +1,58 @@
+.signin{
+  &__main{
+    background: darken($dark-background, 5%);
+  }
+  &__section{
+    height: 100vh;
+    margin: auto;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    text-align: center;
+  }
+  &__form{
+
+  }
+  &__label{
+    visibility: hidden;
+  }
+  &__content{
+    border: 1px solid darken($light-background, 10%);
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-clip: padding-box;
+    outline: 0;
+    background: $dark-background;
+    border: 1px solid $light-background;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.8);
+  }
+  &__heading{
+    text-align: center;
+    font-size: 20px;
+    color: $text;
+    color: #fff;
+  }
+  &__small{
+    display: block;
+    text-align: center;
+    color: $text;
+  }
+  &__logo{
+    width: 140px;
+    height: 140px;
+    margin: auto;
+    display: block;
+    text-align: center;
+  }
+  &__forgot-password{
+    margin: 10px 0;
+    display: block;
+    font-size: 12px;
+  }
+}

@@ -13,19 +13,40 @@
     }
     &-selectbox{
       background: transparent;
-      border: none;
-      color: $text;
+      color: #fff;
       padding: 10px!important;
       border: 1px solid darken($light-background, 10%)!important;
       border-radius: 5px!important;
+      margin-bottom: 20px;
       &:focus{
         outline: none;
         box-shadow: none!important;
       }
-    }
-    &-option{
-      color: $text;
-      padding: 0;
+      .react-dropdown-select-dropdown{
+        border: 1px solid darken($light-background, 10%);
+        top: 60px!important;
+        width: 100%!important;
+      }
+      .react-dropdown-select-item{
+        background: $dark-background!important;
+        color: $text;
+        padding: 10px;
+        border: none;
+        font-size: 13px;
+        transition: 0.3s all;
+        font-weight: bold;
+        &:hover{
+          background: darken($light-background, 10%)!important;
+          color: #fff;
+          transition: 0.3s all;
+        }
+        lord-icon{
+          display: inline-block;
+          width: 25px;
+          height: 25px;
+          margin-right: 10px;
+        }
+      }
     }
   }
   // Custom Radio
@@ -44,54 +65,14 @@
   }
 }
 
-.react-dropdown-select-clear,
-.react-dropdown-select-dropdown-handle {
-  color: #fff;
-}
-.react-dropdown-select-option {
-  border: 1px solid #fff;
-}
-.react-dropdown-select-item {
-  color: #333;
-}
-.react-dropdown-select-input {
-  color: #fff;
-}
-.react-dropdown-select-dropdown {
-  position: absolute;
-  left: 0;
+input[type="text"], input[type="email"], input[type="password"]{
+  background: $light-background;
   border: none;
-  width: 500px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  border-radius: 2px;
-  max-height: 300px;
-  overflow: auto;
-  z-index: 9;
-  background: #333;
-  box-shadow: none;
-  color: #fff !important;
-  width: 100%!important;
-  top: 100%!important; // Temp hack fix
-}
-
-.react-dropdown-select-item {
-  color: #f2f2f2;
-  border-bottom: 1px solid #333;
-
-  :hover {
-    color: #ffffff80;
-  }
-}
-.react-dropdown-select-item.react-dropdown-select-item-selected,
-.react-dropdown-select-item.react-dropdown-select-item-active {
-  //background: #111;
-  border-bottom: 1px solid #333;
-  color: #fff;
-  font-weight: bold;
-}
-.react-dropdown-select-item.react-dropdown-select-item-disabled {
-  background: #777;
-  color: #ccc;
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  color: #ffffff;
+  border-radius: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  &:focus{ outline: none; }
 }

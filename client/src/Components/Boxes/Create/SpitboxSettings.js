@@ -84,6 +84,32 @@ const SpitboxSettings = ({ values, setValues, moveModal, setMoveModal, translate
                     options={options}
                     onChange={(e) => {setSelected(e)}}
                     className={`form__select-selectbox`}
+                    itemRenderer={({ item, methods }) => (
+                        <>
+                            {item.disabled ? (
+                                <div aria-disabled>{item.label}</div>
+                            ) : (
+                                <div onClick={() => methods.addItem(item)} className={`react-dropdown-select-item`}>
+                                    {item.label === 'Cypher' ? (
+                                        <lord-icon
+                                            animation="loop"
+                                            target="div"
+                                            palette="#FECB47"
+                                            src={`../../assets/icons/314-three-avatars-icon-calm/314-three-avatars-icon-calm-solid.json`}>
+                                        </lord-icon>
+                                    ) : (
+                                        <lord-icon
+                                            animation="loop"
+                                            target="div"
+                                            palette="#e5251f"
+                                            src={`../../assets/icons/134-target/134-target-solid.json`}>
+                                        </lord-icon>
+                                    )}
+                                    {item.label}
+                                </div>
+                            )}
+                        </>
+                    )}
                 />
             </Modal.Body>
             <Modal.Footer className={`modal-inner__footer`}>

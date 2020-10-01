@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import SpitbossLogo from '../assets/images/spitboss.svg';
 
 // Layout and method imports
 import Default from '../layouts/default/Default';
@@ -62,16 +63,16 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
     const signUpForm = () => (
         <div className="container">
             {showLoading()}
-            <Form>
+            <Form className={`signin__form`}>
                 <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label className={`signin__label`}>Email</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" onChange={handleChange('email')} value={email} />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label className={`signin__label`}>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={handleChange('password')} value={password} />
                 </Form.Group>
-                <Link to={"/auth/password/forgot"}>Forgot password</Link>
+                <Link to={"/auth/password/forgot"} className={`signin__forgot-password`}>Forgot password</Link>
                 <br/>
                 <Button variant="primary" type="submit" onClick={(e) => clickSubmit(e)}>
                     Submit
@@ -93,10 +94,17 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
     };
 
     return(
-        <Default title="Signin" description="Signin description">
-            {signUpForm()}
+        <main className={`signin__main`}>
+            <section className={`signin__section`}>
+                <div className="signin__content">
+                    <img src={SpitbossLogo} alt="Spitboss Logo" className={`signin__logo`}/>
+                    <h1 className={`signin__heading`}>Login</h1>
+                    <small className={`signin__small`}>Your Spitbox will not become active until your opponent accepts your challenge.</small>
+                    {signUpForm()}
+                </div>
+            </section>
             {redirectUser()}
-        </Default>
+        </main>
     )
 };
 
