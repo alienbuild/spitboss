@@ -5,6 +5,7 @@ import Col from "react-bootstrap/cjs/Col";
 import {getAllUsers} from "../../../user/apiUser";
 import {useSelector} from "react-redux";
 import Button from "react-bootstrap/cjs/Button";
+import Form from "react-bootstrap/cjs/Form";
 
 const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateModal, handleClose }) => {
 
@@ -73,7 +74,9 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                                 <span className="select-members__name">{opponent.name}</span>
                             </Col>
                             <Col>
-                                        <span className="select-members__checkbox">
+                                <label className={`form__radio-label float-right`}>
+                                    <input type="radio" name="test" value="small" className={`form__radio-input`}/>
+                                    <span className="select-members__checkbox form__custom-radio">
                                             <lord-icon
                                                 animation="custom"
                                                 target="button"
@@ -81,6 +84,7 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                                                 src={`../../assets/icons/388-check-box-3-morph/388-check-box-3-morph.json`}>
                                             </lord-icon>
                                         </span>
+                                </label>
                             </Col>
                         </Row>
                     </button>
