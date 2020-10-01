@@ -25,11 +25,12 @@ const CreateBoxes = () => {
         screen: 'default',
         translate: 'translateX(0%) translateZ(1px)'
     });
+
     const translateModal = (e, screen) => {
         e.preventDefault();
+
         const modalScreen = document.querySelector(`.screen-${screen}`);
         const height = modalScreen.offsetHeight;
-
         e.target.closest('.modal-content').style.height = height + 'px';
 
         switch (screen){
@@ -280,7 +281,6 @@ const CreateBoxes = () => {
               backdrop="static"
               keyboard={false}
               centered
-
           >
               <div className="translate-this screen-default" style={ moveModal.screen ==='default' ? { transform: 'translateX(0%) translateZ(1px)' } : { transform:'translateX(-100%) translateZ(1px)', visibility: 'hidden'} }>
                   <Modal.Header className={`modal__header`}>
