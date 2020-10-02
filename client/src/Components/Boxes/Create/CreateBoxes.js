@@ -298,7 +298,7 @@ const CreateBoxes = () => {
                           {newSpitboxForm()}
                       </Modal.Body>
                       <Modal.Footer>
-                          <button type="submit">Create Spitbox</button>
+                          <Button type={`submit`}>Create Spitbox</Button>
                       </Modal.Footer>
                   </form>
               </div>

@@ -54,19 +54,7 @@
       border: none;
       button[type="submit"]{
         display: block;
-        border: none;
         width: 100%;
-        background: $yellow;
-        border-radius: 5px;
-        padding: 5px;
-        font-size: 14px;
-        color: $dark-background;
-        font-weight: bold;
-        transition: 0.3s all;
-        &:hover{
-          background: lighten($yellow, 5%);
-          transition: 0.3s all;
-        }
       }
     }
   }
@@ -128,8 +116,8 @@
   }
   &__search-icon{
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: 8px;
+    top: 8px;
     width: 44px;
     height: 44px;
     lord-icon{
@@ -138,14 +126,6 @@
     }
   }
   &__input{
-    background: $light-background;
-    border: none;
-    width: 100%;
-    padding: 10px 10px 10px 40px;
-    color: #ffffff;
-    border-radius: 30px;
-    margin-bottom: 10px;
-    font-size: 14px;
     &:focus{ outline: none; }
   }
 }
