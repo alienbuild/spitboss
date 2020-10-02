@@ -23,3 +23,11 @@ button{
     outline: none;
   }
 }
+
+a{
+  transition: 0.3s all;
+  &:hover{
+    transition: 0.3s all;
+    color: lighten($link-color, 5%);
+  }
+}

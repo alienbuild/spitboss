@@ -1,4 +1,22 @@
 .signin{
+  position: relative;
+  &__register{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: $red;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.3s all;
+    &:hover{
+      background: lighten($red,5%);
+      transition: 0.6s all;
+      text-decoration: none;
+      color: #fff;
+    }
+  }
   &__main{
     background: darken($dark-background, 5%);
   }
@@ -12,10 +30,13 @@
     text-align: center;
   }
   &__form{
-
+    margin-top: 20px;
   }
   &__label{
-    visibility: hidden;
+    text-align: left;
+    color: $text;
+    display: block;
+    font-size: 12px;
   }
   &__content{
     border: 1px solid darken($light-background, 10%);
@@ -31,6 +52,9 @@
     border: 1px solid $light-background;
     border-radius: 10px;
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.8);
+    &--alerts{
+      box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.8), inset 0px 0px 0px 3px $red;
+    }
   }
   &__heading{
     text-align: center;
@@ -54,5 +78,20 @@
     margin: 10px 0;
     display: block;
     font-size: 12px;
+    text-align: right;
+  }
+  &__submit{
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+  }
+  &__alert{
+    position: absolute;
+    width: 500px;
+    margin: auto;
+    top: 20px;
+    left: 50%;
+    margin-left: -250px;
+    z-index: 1;
   }
 }

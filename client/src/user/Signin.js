@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import SpitbossLogo from '../assets/images/spitboss.svg';
@@ -6,6 +6,7 @@ import SpitbossLogo from '../assets/images/spitboss.svg';
 // Layout and method imports
 import Default from '../layouts/default/Default';
 import { signin, authenticate, isAuthenticated } from "../auth";
+import {removeAlert, setAlert} from "../actions/alert";
 
 // Bootstrap imports
 import Alert from "react-bootstrap/cjs/Alert";
@@ -13,10 +14,12 @@ import Form from 'react-bootstrap/cjs/Form';
 import Button from 'react-bootstrap/cjs/Button';
 import {getUser} from "../actions/userActions";
 
-const Signin = ({setAlert, removeAlert, alerts}) => {
+const Signin = () => {
 
     // Ready dispatch
     const dispatch = useDispatch();
+
+    const alerts = useSelector(state => state.alerts);
 
     // Init state
     const [values, setValues] = useState({
@@ -26,6 +29,7 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
         loading: false,
         redirectToReferrer: false
     });
+
 
     // Handle form field changes
     const handleChange = name => event => {
@@ -42,13 +46,12 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
     // Handle form submit
     const clickSubmit = (e) => {
         e.preventDefault();
-
+        dispatch(removeAlert(alert.id));
         setValues({...values, error: false, loading: true});
         signin({email, password})
             .then(data => {
-                console.log('data is', data);
                 if (data.error){
-                    //setAlert(data.error, 'danger');
+                    dispatch(setAlert(data.error, 'danger'));
                     setValues({...values, loading: false})
                 } else {
                     dispatch(getUser(data));
@@ -73,9 +76,8 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
                     <Form.Control type="password" placeholder="Password" onChange={handleChange('password')} value={password} />
                 </Form.Group>
                 <Link to={"/auth/password/forgot"} className={`signin__forgot-password`}>Forgot password</Link>
-                <br/>
-                <Button variant="primary" type="submit" onClick={(e) => clickSubmit(e)}>
-                    Submit
+                <Button variant="primary" type="submit" className={`signin__submit`} onClick={(e) => clickSubmit(e)}>
+                    Login
                 </Button>
             </Form>
         </div>
@@ -95,11 +97,17 @@ const Signin = ({setAlert, removeAlert, alerts}) => {
 
     return(
         <main className={`signin__main`}>
+            {alerts !== null && alerts.length > 0 && alerts.map((alert) => (
+                <Alert key={alert.id} className={`signin__alert`} variant={alert.alertType} onClose={() => dispatch(removeAlert(alert.id))} dismissible>
+                    {alert.msg}
+                </Alert>
+            ))}
             <section className={`signin__section`}>
-                <div className="signin__content">
+                <div className={`signin__content ${alerts !== null && alerts.length > 0 ? 'signin__content--alerts' : null}`}>
+                    <Link to={`/signup`} className={`signin__register`}>Register</Link>
                     <img src={SpitbossLogo} alt="Spitboss Logo" className={`signin__logo`}/>
-                    <h1 className={`signin__heading`}>Login</h1>
-                    <small className={`signin__small`}>Your Spitbox will not become active until your opponent accepts your challenge.</small>
+                    <h1 className={`signin__heading`}>Welcome to Spitboss</h1>
+                    <small className={`signin__small`}>Hold up, where's your credentials at?</small>
                     {signUpForm()}
                 </div>
             </section>

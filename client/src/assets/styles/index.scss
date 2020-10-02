@@ -21,6 +21,12 @@ $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 
+$link-color:                              #487CFE;
+$link-hover-color:                        lighten($link-color, 15%) !default;
+$link-hover-decoration:                   underline !default;
+// Darken percentage for links with `.text-*` class (e.g. `.text-success`)
+$emphasized-link-hover-darken-percentage: 15% !default;
+
 .badge-secondary{
   background: $secondary;
   padding: 0.25em 1em;
