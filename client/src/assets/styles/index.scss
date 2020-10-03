@@ -48,6 +48,7 @@ $emphasized-link-hover-darken-percentage: 15% !default;
 
 // Components -> Spitbox
 @import 'components/Signin';
+@import 'components/Signup';
 @import 'components/spitbox';
 @import 'components/CreateSpitbox';
 @import 'components/modals';
