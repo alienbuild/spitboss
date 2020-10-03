@@ -19,22 +19,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    about: {
-        type: String,
-        trim: true,
-    },
     salt: String,
     role: {
-        type: Number,
-        default: 0
+        type: String,
+        default: 'member'
     },
     resetPasswordLink: {
         data: String,
         default: ''
-    },
-    history: {
-        type: Array,
-        default: []
     }
 }, {timestamps: true});
 

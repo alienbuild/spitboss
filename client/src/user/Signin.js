@@ -13,6 +13,7 @@ import Alert from "react-bootstrap/cjs/Alert";
 import Form from 'react-bootstrap/cjs/Form';
 import Button from 'react-bootstrap/cjs/Button';
 import {getUser} from "../actions/userActions";
+import Google from "../auth/Google";
 
 const Signin = () => {
 
@@ -30,7 +31,6 @@ const Signin = () => {
         redirectToReferrer: false
     });
 
-
     // Handle form field changes
     const handleChange = name => event => {
         setValues({
@@ -42,6 +42,14 @@ const Signin = () => {
 
     const { email, password, error, loading, redirectToReferrer } = values;
     const { user } = isAuthenticated();
+
+    // Inform Signin.js of social login responses
+    const informParent = response => {
+        dispatch(getUser(response.profileObj.name));
+        authenticate(response, () => {
+            setValues({...values, redirectToReferrer: true})
+        });
+    }
 
     // Handle form submit
     const clickSubmit = (e) => {
@@ -109,6 +117,7 @@ const Signin = () => {
                     <h1 className={`signin__heading`}>Welcome to Spitboss</h1>
                     <small className={`signin__small`}>Hold up, where's your credentials at?</small>
                     {signUpForm()}
+                    <Google informParent={informParent} />
                 </div>
             </section>
             {redirectUser()}

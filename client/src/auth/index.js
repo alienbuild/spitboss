@@ -69,6 +69,24 @@ export const signin = (user) => {
         })
 };
 
+// Handle Google Signin
+export const googleSignin = (tokenId) => {
+    return fetch(`${API}/google-login`, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(tokenId)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            console.log('Error', err);
+        })
+};
+
 // Authenticate
 export const authenticate = (data, next) => {
     getUser(JSON.stringify(data));
