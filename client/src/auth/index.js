@@ -87,6 +87,24 @@ export const googleSignin = (tokenId) => {
         })
 };
 
+// Handle Google Signin
+export const facebookSignin = (tokenId) => {
+    return fetch(`${API}/facebook-login`, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(tokenId)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            console.log('Error', err);
+        })
+};
+
 // Authenticate
 export const authenticate = (data, next) => {
     getUser(JSON.stringify(data));

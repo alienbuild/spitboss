@@ -14,6 +14,7 @@ import Form from 'react-bootstrap/cjs/Form';
 import Button from 'react-bootstrap/cjs/Button';
 import {getUser} from "../actions/userActions";
 import Google from "../auth/Google";
+import Facebook from "../auth/Facebook";
 
 const Signin = () => {
 
@@ -45,6 +46,7 @@ const Signin = () => {
 
     // Inform Signin.js of social login responses
     const informParent = response => {
+        // TODO: Destructre the response and match redux with current normal login saved state.
         dispatch(getUser(response.profileObj.name));
         authenticate(response, () => {
             setValues({...values, redirectToReferrer: true})
@@ -118,6 +120,7 @@ const Signin = () => {
                     <small className={`signin__small`}>Hold up, where's your credentials at?</small>
                     {signUpForm()}
                     <Google informParent={informParent} />
+                    <Facebook informParent={informParent} />
                 </div>
             </section>
             {redirectUser()}
