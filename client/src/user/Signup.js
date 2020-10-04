@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Default from '../layouts/default/Default';
-import { signup } from "../auth";
+import {authenticate, signup} from "../auth";
 import SpitbossLogo from "../assets/images/spitboss.svg";
 import Form from "react-bootstrap/cjs/Form";
 import Button from "react-bootstrap/cjs/Button";
+import Row from "react-bootstrap/cjs/Row";
+import Col from "react-bootstrap/cjs/Col";
+import Facebook from "../auth/Facebook";
+import Google from "../auth/Google";
 
 const Signup = () => {
 
@@ -25,6 +29,15 @@ const Signup = () => {
             [name]: event.target.value
         });
     };
+
+    // Inform Signin.js of social login responses
+    const informParent = response => {
+        // TODO: Destructre the response and match redux with current normal login saved state.
+        //dispatch(getUser(response.profileObj.name));
+        authenticate(response, () => {
+            setValues({...values, redirectToReferrer: true})
+        });
+    }
 
     const {name, email, password, success, error} = values;
 
@@ -84,11 +97,25 @@ const Signup = () => {
             {showError()}
             <section className="signup__section">
                 <div className={`signup__content ${success ? 'signup__content--success' : null} ${error ? 'signup__content--error' : null}`}>
-                    <Link to={`/signin`} className={`signup__register`}>Login</Link>
-                    <img src={SpitbossLogo} alt="Spitboss Logo" className={`signup__logo`}/>
-                    <h1 className={`signup__heading`}>Register</h1>
-                    <small className={`signup__small`}>You're free to sign up, but you'll need to prove yourself to become a boss.</small>
-                    {signUpForm()}
+                    <Row>
+                        <Col>
+                            <Link to={`/signin`} className={`signup__register`}>Login</Link>
+                            <img src={SpitbossLogo} alt="Spitboss Logo" className={`signup__logo`}/>
+                            <h1 className={`signup__heading`}>Register</h1>
+                            <small className={`signup__small`}>You're free to sign up, but you'll need to prove yourself to become a boss.</small>
+                            {signUpForm()}
+                        </Col>
+                    </Row>
+                    <div className="social-login">
+                        <ul className={`social-login__list`}>
+                            <li className={`social-login__item`}>
+                                <Facebook informParent={informParent} />
+                            </li>
+                            <li className={`social-login__item`}>
+                                <Google informParent={informParent} />
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </section>
         </main>
