@@ -25,7 +25,7 @@ const Facebook = ({ informParent = f => f }) => {
                     <button
                         className={`social-login__facebook`}
                         onClick={renderProps.onClick}
-                    >Facebook login</button>
+                    >Continue with Facebook</button>
                 )}
             />
         </>

@@ -9,6 +9,8 @@ import { signin, authenticate, isAuthenticated } from "../auth";
 import {removeAlert, setAlert} from "../actions/alert";
 
 // Bootstrap imports
+import Row from "react-bootstrap/cjs/Row";
+import Col from "react-bootstrap/cjs/Col";
 import Alert from "react-bootstrap/cjs/Alert";
 import Form from 'react-bootstrap/cjs/Form';
 import Button from 'react-bootstrap/cjs/Button';
@@ -47,7 +49,7 @@ const Signin = () => {
     // Inform Signin.js of social login responses
     const informParent = response => {
         // TODO: Destructre the response and match redux with current normal login saved state.
-        dispatch(getUser(response.profileObj.name));
+        //dispatch(getUser(response.profileObj.name));
         authenticate(response, () => {
             setValues({...values, redirectToReferrer: true})
         });
@@ -74,23 +76,25 @@ const Signin = () => {
 
     // Signin form markup
     const signUpForm = () => (
-        <div className="container">
-            {showLoading()}
-            <Form className={`signin__form`}>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label className={`signin__label`}>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={handleChange('email')} value={email} />
-                </Form.Group>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label className={`signin__label`}>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={handleChange('password')} value={password} />
-                </Form.Group>
-                <Link to={"/auth/password/forgot"} className={`signin__forgot-password`}>Forgot password</Link>
-                <Button variant="primary" type="submit" className={`signin__submit`} onClick={(e) => clickSubmit(e)}>
-                    Login
-                </Button>
-            </Form>
-        </div>
+        <Row>
+            <Col>
+                <Form className={`signin__form`}>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label className={`signin__label`}>Email</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" onChange={handleChange('email')} value={email} />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label className={`signin__label`}>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" onChange={handleChange('password')} value={password} />
+                    </Form.Group>
+                    <Link to={"/auth/password/forgot"} className={`signin__forgot-password`}>Forgot password</Link>
+                    <Button variant="primary" type="submit" className={`signin__submit`} onClick={(e) => clickSubmit(e)}>
+                        Login
+                    </Button>
+                </Form>
+                {showLoading()}
+            </Col>
+        </Row>
     );
 
     // Handle success
@@ -114,13 +118,25 @@ const Signin = () => {
             ))}
             <section className={`signin__section`}>
                 <div className={`signin__content ${alerts !== null && alerts.length > 0 ? 'signin__content--alerts' : null}`}>
-                    <Link to={`/signup`} className={`signin__register`}>Register</Link>
-                    <img src={SpitbossLogo} alt="Spitboss Logo" className={`signin__logo`}/>
-                    <h1 className={`signin__heading`}>Welcome to Spitboss</h1>
-                    <small className={`signin__small`}>Hold up, where's your credentials at?</small>
-                    {signUpForm()}
-                    <Google informParent={informParent} />
-                    <Facebook informParent={informParent} />
+                    <Row>
+                        <Col>
+                            <Link to={`/signup`} className={`signin__register`}>Register</Link>
+                            <img src={SpitbossLogo} alt="Spitboss Logo" className={`signin__logo`}/>
+                            <h1 className={`signin__heading`}>Welcome to Spitboss</h1>
+                            <small className={`signin__small`}>Hold up, where's your credentials at?</small>
+                            {signUpForm()}
+                        </Col>
+                    </Row>
+                    <div className="social-login">
+                        <ul className={`social-login__list`}>
+                            <li className={`social-login__item`}>
+                                <Facebook informParent={informParent} />
+                            </li>
+                            <li className={`social-login__item`}>
+                                <Google informParent={informParent} />
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </section>
             {redirectUser()}

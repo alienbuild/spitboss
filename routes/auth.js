@@ -9,7 +9,8 @@ const {
     requireSignin,
     forgotPassword,
     resetPassword,
-    googleLogin
+    googleLogin,
+    facebookLogin
 } = require('../controllers/auth');
 
 // Import validators
@@ -26,9 +27,10 @@ router.put('/reset-password', resetPasswordValidator, resetPassword);
 // User Log out
 router.get('/signout', signout );
 
-// Google
+// Google Login
 router.post('/google-login', googleLogin);
-
+// Facebook Login
+router.post('/facebook-login', facebookLogin);
 
 // Facebook
 

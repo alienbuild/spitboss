@@ -25,7 +25,7 @@ const Google = ({ informParent = f => f }) => {
                         className={`social-login__google`}
                         disabled={renderProps.disabled}
                     >
-                        Google login
+                        Continue with Google
                     </button>
                 )}
                 onSuccess={responseGoogle}
