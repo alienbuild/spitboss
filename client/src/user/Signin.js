@@ -17,6 +17,7 @@ import Button from 'react-bootstrap/cjs/Button';
 import {getUser} from "../actions/userActions";
 import Google from "../auth/Google";
 import Facebook from "../auth/Facebook";
+import Twitter from "../auth/Twitter";
 
 const Signin = () => {
 
@@ -134,6 +135,9 @@ const Signin = () => {
                             </li>
                             <li className={`social-login__item`}>
                                 <Google informParent={informParent} />
+                            </li>
+                            <li className="social-login__twitter">
+                                <Twitter />
                             </li>
                         </ul>
                     </div>
