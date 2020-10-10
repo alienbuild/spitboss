@@ -1,16 +1,67 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import Default from '../layouts/default/Default';
-import {authenticate, signup} from "../auth";
-import SpitbossLogo from "../assets/images/spitboss.svg";
-import Form from "react-bootstrap/cjs/Form";
-import Button from "react-bootstrap/cjs/Button";
-import Row from "react-bootstrap/cjs/Row";
-import Col from "react-bootstrap/cjs/Col";
+import { Redirect } from 'react-router-dom';
+
+// Spitboss Logo
+import SpitbossLogo from '../assets/images/spitboss.svg';
+
+// Methods
+import {authenticate, isAuthenticated, signin, signup} from "../auth";
+
+// Sub components
 import Facebook from "../auth/Facebook";
 import Google from "../auth/Google";
 
+// Material imports
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import Twitter from "../auth/Twitter";
+import {getUser} from "../actions/userActions";
+import {useDispatch} from "react-redux";
+
 const Signup = () => {
+
+    // Styles/Theme
+    const useStyles = makeStyles((theme) => ({
+        mainEl: {
+            display: 'flex',
+            height: '100vh',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        logo: {
+            height: theme.spacing(24),
+            marginBottom: theme.spacing(2)
+        },
+        form: {
+            width: '100%', // Fix IE 11 issue.
+            marginTop: theme.spacing(1),
+        },
+        submit: {
+            margin: theme.spacing(3, 0, 2),
+        },
+        buttonGroups: {
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            '& > *': {
+                margin: theme.spacing(1),
+            },
+        }
+    }));
+    const classes = useStyles();
+
+    // Ready dispatch
+    const dispatch = useDispatch();
 
     // Init state
     const [values, setValues] = useState({
@@ -20,6 +71,7 @@ const Signup = () => {
         error: '',
         success: false
     });
+    const [userId, setUserId] = useState();
 
     // Handle form field changes
     const handleChange = name => event => {
@@ -32,7 +84,7 @@ const Signup = () => {
 
     // Inform Signin.js of social login responses
     const informParent = response => {
-        // TODO: Destructre the response and match redux with current normal login saved state.
+        // TODO: Destructure the response and match redux with current normal login saved state.
         //dispatch(getUser(response.profileObj.name));
         authenticate(response, () => {
             setValues({...values, redirectToReferrer: true})
@@ -50,35 +102,67 @@ const Signup = () => {
                 if (data.error){
                     setValues({...values, error: data.error, success: false})
                 } else {
-                    setValues({...values, name: '', email: '', password: '', error: '', success: true})
+                    signin({email, password})
+                        .then(signinData => {
+                            if (signinData.error){
+                                setValues({...values, loading: false})
+                            } else {
+                                setUserId(signinData.user._id);
+                                console.log('User id is:', userId);
+                                dispatch(getUser(signinData));
+                                authenticate(signinData, () => {
+                                    setValues({...values, name: '', email: '', password: '', error: '', success: true})
+                                });
+                            }
+                        })
                 }
             })
     };
 
     // Signup form markup
     const signUpForm = () => (
-        <div className={"container"}>
-            <form className={`signup__form`}>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label className={`signup__label`}>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter name" onChange={handleChange('name')} value={name} />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label className={`signup__label`}>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={handleChange('email')} value={email} />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label className={`signup__label`}>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={handleChange('password')} value={password} />
-                </Form.Group>
-
-                <Button variant="primary" type="submit" className={`signup__submit`} onClick={(e) => clickSubmit(e)}>
-                    Register
-                </Button>
-            </form>
-        </div>
+        <form className={`signup__form`}>
+            <TextField
+                margin="normal"
+                variant={"outlined"}
+                label="Name"
+                fullWidth
+                onChange={handleChange('name')}
+                value={name}
+                required
+                autoFocus
+            />
+            <TextField
+                margin="normal"
+                variant={"outlined"}
+                label="Email"
+                type={`email`}
+                fullWidth
+                onChange={handleChange('email')}
+                value={email}
+                required
+            />
+            <TextField
+                margin="normal"
+                variant={"outlined"}
+                label="Password"
+                type={`password`}
+                fullWidth
+                onChange={handleChange('password')}
+                value={password}
+                required
+                autoComplete="current-password"
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+                className={classes.submit}
+                onClick={(e) => clickSubmit(e)}>
+                Sign up
+            </Button>
+        </form>
     );
 
     // Handle errors
@@ -86,39 +170,68 @@ const Signup = () => {
         <div className="alert alert-danger signup__alert" style={{display: error ? '' : 'none'}}>{error}</div>
     );
 
-    // Handle success
-    const showSuccess = () => (
-        <div className="alert info signup__alert" style={{display: success ? '' : 'none'}}>New user created. <Link to="/signin">Please sign in.</Link></div>
+    // Handle redirect on successful login
+    const redirectUser = () => {
+        if (success){
+            return <Redirect to={`/profile/complete/${userId}`} />;
+        }
+    };
+
+    // Social Login
+    const socialLogin = (informParent) => (
+        <ButtonGroup className={classes.buttonGroups} aria-label="outlined primary button group">
+            <Facebook informParent={informParent} />
+            <Google informParent={informParent} />
+            <Twitter />
+        </ButtonGroup>
     );
 
     return(
-        <main className={`signup__main`}>
-            {showSuccess()}
-            {showError()}
-            <section className="signup__section">
-                <div className={`signup__content ${success ? 'signup__content--success' : null} ${error ? 'signup__content--error' : null}`}>
-                    <Row>
-                        <Col>
-                            <Link to={`/signin`} className={`signup__register`}>Login</Link>
-                            <img src={SpitbossLogo} alt="Spitboss Logo" className={`signup__logo`}/>
-                            <h1 className={`signup__heading`}>Register</h1>
-                            <small className={`signup__small`}>You're free to sign up, but you'll need to prove yourself to become a boss.</small>
-                            {signUpForm()}
-                        </Col>
-                    </Row>
-                    <div className="social-login">
-                        <ul className={`social-login__list`}>
-                            <li className={`social-login__item`}>
-                                <Facebook informParent={informParent} />
-                            </li>
-                            <li className={`social-login__item`}>
-                                <Google informParent={informParent} />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <Container component="main" maxWidth="xs">
+            <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+            >
+                <Grid item>
+                    <main className={classes.mainEl}>
+                        {showError()}
+                        <img src={SpitbossLogo} alt="Spitboss Logo" className={classes.logo}/>
+                        <Typography
+                            variant={`h4`}
+                            color={`textPrimary`}
+                            gutterBottom
+                        >
+                            Sign up
+                        </Typography>
+                        <Typography
+                            variant={`subheading1`}
+                            color={`textSecondary`}
+                            style={{
+                                textAlign: 'center'
+                            }}
+                        >
+                            Alright you're free to sign up, but you'll need to prove yourself to become a boss.
+                        </Typography>
+
+                        {signUpForm()}
+
+                        <Grid container justify="flex-end" alignItems="right">
+                            <Grid item>
+                                <Link href={`/signin`} variant="body2" color={`primary`}>
+                                    {"Already have an account? Login"}
+                                </Link>
+                            </Grid>
+                        </Grid>
+
+                        <Divider variant="middle" style={{ margin: '20px auto', width:'100%' }}/>
+                        {socialLogin(informParent)}
+                        {redirectUser()}
+                    </main>
+                </Grid>
+            </Grid>
+        </Container>
     )
 };
 

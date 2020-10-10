@@ -12,6 +12,7 @@ import green from '@material-ui/core/colors/green';
 // Routes
 import Signin from './user/Signin'
 import Signup from "./user/Signup";
+import Profile from './user/Profile';
 import Forgot from "./user/Forgot";
 import Reset from "./user/Reset";
 import Spitbox from "./Components/Spitbox/Spitbox"
@@ -45,11 +46,12 @@ const Routes = () => {
                 </Helmet>
                 <Switch>
                     <ThemeProvider theme={theme}>
-                        <PrivateRoute path={`/spitbox/spitboxes`} exact component={GetBoxes} />
+                        <PrivateRoute path={`/spitboxes`} exact component={GetBoxes} />
                         <PrivateRoute path={`/spitbox/:id`} exact component={Spitbox} />
 
                         <Route path="/signup" exact component={Signup} />
                         <Route path="/signin" exact component={Signin} />
+                        <PrivateRoute path="/profile/complete/:userId" component={Profile} exact />
 
                         <Route path="/auth/password/forgot" exact component={Forgot} />
                         <Route path="/auth/password/reset/:token" exact component={Reset} />

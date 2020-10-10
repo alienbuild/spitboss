@@ -5,12 +5,12 @@ import { Redirect } from 'react-router-dom';
 // Spitboss Logo
 import SpitbossLogo from '../assets/images/spitboss.svg';
 
-// Layout and method imports
+// Methods
 import { signin, authenticate, isAuthenticated } from "../auth";
-import {removeAlert, setAlert} from "../actions/alert";
+import { removeAlert, setAlert } from "../actions/alert";
+import {getUser} from "../actions/userActions";
 
 // Sub Components
-import {getUser} from "../actions/userActions";
 import Google from "../auth/Google";
 import Facebook from "../auth/Facebook";
 import Twitter from "../auth/Twitter";
@@ -124,6 +124,7 @@ const Signin = () => {
                     margin="normal"
                     variant={"outlined"}
                     label="Email"
+                    type={`email`}
                     fullWidth
                     onChange={handleChange('email')}
                     value={email}
@@ -163,7 +164,7 @@ const Signin = () => {
     // Handle redirect on successful login
     const redirectUser = () => {
         if (isAuthenticated()){
-            return <Redirect to="/spitbox" />;
+            return <Redirect to="/spitboxes" />;
         }
     };
 
@@ -206,6 +207,9 @@ const Signin = () => {
                         <Typography
                             variant={`subheading1`}
                             color={`textSecondary`}
+                            style={{
+                                textAlign: 'center'
+                            }}
                         >
                             Hold up, where's your credentials at?
                         </Typography>
@@ -214,18 +218,18 @@ const Signin = () => {
 
                         <Grid container>
                             <Grid item xs>
-                                <Link href={"/auth/password/forgot"} variant="body2">
+                                <Link href={"/auth/password/forgot"} variant="body2" color={`textSecondary`}>
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href={`/signup`} variant="body2">
+                                <Link href={`/signup`} variant="body2" color={`primary`}>
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
                         </Grid>
 
-                        <Divider variant="middle" style={{ marginTop: '20px', background: 'none' }}/>
+                        <Divider variant="middle" style={{ margin: '20px auto', width:'100%' }}/>
                         {socialLogin(informParent)}
 
                         {redirectUser()}
