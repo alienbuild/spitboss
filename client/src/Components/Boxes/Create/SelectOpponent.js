@@ -1,11 +1,6 @@
 import React, {useEffect, useState} from "react";
-import Modal from "react-bootstrap/cjs/Modal";
-import Row from "react-bootstrap/cjs/Row";
-import Col from "react-bootstrap/cjs/Col";
 import {getAllUsers} from "../../../user/apiUser";
 import {useSelector} from "react-redux";
-import Button from "react-bootstrap/cjs/Button";
-import Form from "react-bootstrap/cjs/Form";
 
 const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateModal, handleClose }) => {
 
@@ -64,16 +59,10 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                             }
                         })
                     }}>
-                        <Row className={`align-items-center`}>
-                            <Col md={1}>
                                         <span className="select-members__avatar">
                                             <img src="https://fakeimg.pl/36x36/333/fff" className={`select-members__image`}/>
                                         </span>
-                            </Col>
-                            <Col md={8}>
                                 <span className="select-members__name">{opponent.name}</span>
-                            </Col>
-                            <Col>
                                 <label className={`form__radio-label float-right`}>
                                     <input type="radio" name="test" value="small" className={`form__radio-input`}/>
                                     <span className="select-members__checkbox form__custom-radio">
@@ -85,8 +74,6 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                                             </lord-icon>
                                         </span>
                                 </label>
-                            </Col>
-                        </Row>
                     </button>
                 </li>
             })
@@ -95,9 +82,6 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
 
     return(
         <div className={`translate-this screen-select-opponent modal-inner`} style={ moveModal.screen ==='select-opponent' ? { transform:'translateX(0%) translateZ(1px)', position: 'absolute'} : { transform:'translateX(200%) translateZ(1px)', visibility: 'hidden' } }>
-            <Modal.Header className={`modal-inner__header`}>
-                <Row className={`align-items-center`}>
-                    <Col>
                         <button className={`modal-inner__button modal-inner__button--left`} onClick={e => {
                             e.preventDefault();
                             translateModal(e, 'default')
@@ -112,11 +96,7 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                                 src={`../../assets/icons/32-arrow-left/32-arrow-left-outline.json`}>
                             </lord-icon>
                         </button>
-                    </Col>
-                    <Col md={6}>
                         <div className="modal-inner__title">Select opponent</div>
-                    </Col>
-                    <Col>
                         <button className={`modal-inner__button modal-inner__button--right`} onClick={handleClose}>
                             <lord-icon
                                 animation="loop"
@@ -125,10 +105,6 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                                 src={`../../assets/icons/38-error-cross-simple-outline/38-error-cross-simple-outline.json`}>
                             </lord-icon>
                         </button>
-                    </Col>
-                </Row>
-            </Modal.Header>
-            <Modal.Body>
                 <div className="modal-inner__search">
                     <span className="modal-inner__search-icon">
                     <lord-icon
@@ -147,16 +123,13 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
                 <ul className={`select-members__list`}>
                     {filterUsers()}
                 </ul>
-            </Modal.Body>
-            <Modal.Footer className={`modal-inner__footer`}>
-                <Button className={`modal-inner__footer-button`} onClick={e => {
+                <button className={`modal-inner__footer-button`} onClick={e => {
                     e.preventDefault();
                     translateModal(e, 'default')
                     setMoveModal({
                         screen: 'default'
                     })
-                }}>Select</Button>
-            </Modal.Footer>
+                }}>Select</button>
         </div>
     )
 }

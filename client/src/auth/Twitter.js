@@ -22,7 +22,20 @@ const Twitter = ({ informParent = f => f }) => {
                 onFailure={responseTwitter}
                 onSuccess={responseTwitter}
                 requestTokenUrl="http://localhost:3001/api/v1/auth/twitter/reverse"
-            />
+                style={{
+                    backgroundColor: '#1EA1F3',
+                    color: '#FFFFFF',
+                    width: '100%',
+                    border: 'none',
+                    borderRadius: '4px',
+                    textTransform: 'uppercase',
+                    fontSize: '14px',
+                    lineHeight: '22.75px',
+                    fontFamily: 'Roboto',
+                    fontWeight: '500',
+                    padding: '6px 16px'
+                }}
+            >Twitter</TwitterLogin>
         </>
     )
 }

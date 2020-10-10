@@ -66,28 +66,32 @@
 }
 
 input[type="text"], input[type="email"], input[type="password"]{
-  background: $light-background;
-  background: darken($dark-background, 5%);
-  border: none;
-  border: 1px solid darken($light-background, 10%);
-  width: 100%;
-  padding: 10px 20px 10px 40px;
-  color: #ffffff;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  &:focus{
-    outline: none;
-    box-shadow: none;
-    background: darken($dark-background, 5%);
-    border: 1px solid darken($light-background, 10%);
-    box-shadow: inset 0px -2px 0px 0px $yellow;
-  }
-  &:hover{
-    background: darken($dark-background, 5%);
-  }
+  color: #fff;
 }
-.form-control{
-  height: auto;
-}
-.form-control:focus{ color: #fff; }
+
+//input[type="text"], input[type="email"], input[type="password"]{
+//  background: $light-background;
+//  background: darken($dark-background, 5%);
+//  border: none;
+//  border: 1px solid darken($light-background, 10%);
+//  width: 100%;
+//  padding: 10px 20px 10px 40px;
+//  color: #ffffff;
+//  border-radius: 5px;
+//  margin-bottom: 10px;
+//  font-size: 16px;
+//  &:focus{
+//    outline: none;
+//    box-shadow: none;
+//    background: darken($dark-background, 5%);
+//    border: 1px solid darken($light-background, 10%);
+//    box-shadow: inset 0px -2px 0px 0px $yellow;
+//  }
+//  &:hover{
+//    background: darken($dark-background, 5%);
+//  }
+//}
+//.form-control{
+//  height: auto;
+//}
+//.form-control:focus{ color: #fff; }

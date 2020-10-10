@@ -1,9 +1,25 @@
 import React from "react";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import {facebookSignin} from "./index";
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { ColourShadePicker } from "../utils/ColourShadePicker";
 
 const Facebook = ({ informParent = f => f }) => {
 
+    // Styles
+    const useStyles = makeStyles({
+        root: {
+            backgroundColor: '#2C88FF',
+            color: '#FFFFFF',
+            '&:hover': {
+                background: ColourShadePicker('#2C88FF', 10),
+            },
+        }
+    })
+    const classes = useStyles();
+
+    // Facebook response
     const responseFacebook = (response) => {
         console.log('Facebook res is: ', response);
         facebookSignin({userID: response.userID, accessToken: response.accessToken})
@@ -22,10 +38,13 @@ const Facebook = ({ informParent = f => f }) => {
                 autoLoad={false}
                 callback={responseFacebook}
                 render={renderProps => (
-                    <button
-                        className={`social-login__facebook`}
+                    <Button
+                        variant={`contained`}
+                        color={`primary`}
+                        fullWidth
+                        className={classes.root}
                         onClick={renderProps.onClick}
-                    >Continue with Facebook</button>
+                    >Facebook</Button>
                 )}
             />
         </>
