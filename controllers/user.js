@@ -55,3 +55,10 @@ exports.update = (req,res) => {
         }
     );
 };
+
+// Check profile is complete
+exports.profileCompleteCheck = (req,res) => {
+    res.json({
+        complete: req.profile.complete
+    });
+};

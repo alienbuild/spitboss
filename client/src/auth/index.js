@@ -143,3 +143,19 @@ export const isAuthenticated = () => {
         return false;
     }
 };
+
+// Check is user has completed their profile
+export const hasCompletedProfile = (userId) => {
+    return fetch(`${API}/user/profile/check/${userId}`, {
+        method: "GET",
+
+    })
+        .then(response => {
+            console.log('Signed  out.', response)
+            return response;
+        })
+        .catch((err) => {
+            console.log('Error', err);
+            return false;
+        })
+};

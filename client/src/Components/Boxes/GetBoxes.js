@@ -3,6 +3,7 @@ import { Redirect } from 'react-router'
 import {getSpitboxRooms} from "../Spitbox/apiSpitbox";
 import {Link} from "react-router-dom";
 import CreateBoxes from "./Create/CreateBoxes";
+import Default from "../../layouts/default/Default";
 
 const GetBoxes = () => {
 
@@ -29,7 +30,7 @@ const GetBoxes = () => {
     };
 
     return (
-        <>
+        <Default title={`Spitboxes`}>
             {redirectUser ? <Redirect
                 to={{
                     pathname: `/spitbox/${spitboxId}`,
@@ -58,7 +59,7 @@ const GetBoxes = () => {
                 </ul>
             </nav>
             <CreateBoxes />
-        </>
+        </Default>
     )
 }
 

@@ -37,7 +37,9 @@ const SelectOpponent = ({ values, setValues, moveModal, setMoveModal, translateM
     };
 
     const filteredUsers = opponents.filter(opponent => {
-        return opponent.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+        if (opponent.name){
+            return opponent.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+        }
     })
 
     const filterUsers = () => {

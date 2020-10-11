@@ -6,14 +6,18 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        required: true,
-        maxlength: 32
+        unique: true,
+        maxlength: 32,
     },
     email: {
         type: String,
         trim: true,
         required: true,
         unique: true
+    },
+    complete: {
+        type: Boolean,
+        default: false
     },
     hashed_password: {
         type: String,
@@ -23,6 +27,9 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'member'
+    },
+    type: {
+        type: String,
     },
     resetPasswordLink: {
         data: String,

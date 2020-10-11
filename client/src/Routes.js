@@ -5,9 +5,6 @@ import { Provider } from 'react-redux';
 import store from "./store";
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import orange from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
-
 
 // Routes
 import Signin from './user/Signin'
@@ -40,12 +37,12 @@ const theme = createMuiTheme({
 const Routes = () => {
     return (
         <Provider store={store} >
-            <BrowserRouter>
-                <Helmet titleTemplate="Spitboss.com">
-                    <title>Spitboss</title>
-                </Helmet>
-                <Switch>
-                    <ThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+                <BrowserRouter>
+                    <Helmet titleTemplate="Spitboss.com">
+                        <title>Spitboss</title>
+                    </Helmet>
+                    <Switch>
                         <PrivateRoute path={`/spitboxes`} exact component={GetBoxes} />
                         <PrivateRoute path={`/spitbox/:id`} exact component={Spitbox} />
 
@@ -55,10 +52,9 @@ const Routes = () => {
 
                         <Route path="/auth/password/forgot" exact component={Forgot} />
                         <Route path="/auth/password/reset/:token" exact component={Reset} />
-                    </ThemeProvider>
-
-                </Switch>
-            </BrowserRouter>
+                    </Switch>
+                </BrowserRouter>
+            </ThemeProvider>
         </Provider>
     )
 }

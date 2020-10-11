@@ -5,7 +5,7 @@ import Footer from './ui/Footer';
 
 const Default = ({title = 'Title', description = 'Description', className, children}) => (
     <>
-        <Header title={title} description={description} />
+        <Header title={title} />
         <main className={className}>{children}</main>
         <Footer />
     </>
