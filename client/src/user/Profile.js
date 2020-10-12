@@ -20,10 +20,12 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Avatar from '@material-ui/core/Avatar';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import {ColourShadePicker} from "../utils/ColourShadePicker";
 
 
 const Profile = ({match}) => {
@@ -31,6 +33,7 @@ const Profile = ({match}) => {
     // Styles/Theme
     const useStyles = makeStyles((theme) => ({
         instructions: {
+            background: ColourShadePicker('#171420', 90),
             width: '100%',
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
@@ -51,6 +54,9 @@ const Profile = ({match}) => {
             width: '100%', // Fix IE 11 issue.
             marginTop: theme.spacing(1),
         },
+        upload: {
+            display: 'none'
+        },
         submit: {
             margin: theme.spacing(3, 0, 2),
         },
@@ -70,22 +76,30 @@ const Profile = ({match}) => {
         selectEmpty: {
             marginTop: theme.spacing(2),
         },
+        avatarPreview: {
+            margin: theme.spacing(2),
+            overflow: 'hidden',
+            display: 'flex',
+            justifyContent: 'center',
+            '& > *': {
+                width: theme.spacing(12),
+                height: theme.spacing(12),
+                margin: theme.spacing(1),
+            }
+        }
     }));
     const classes = useStyles();
 
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
-    const handleNext = () => {
+    const handleNext = (e) => {
+        console.log('values are: ', values);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
     };
 
     // Init state
@@ -101,6 +115,8 @@ const Profile = ({match}) => {
         success: false
     });
 
+    const [avatarSelected, setAvatarSelected] = useState('');
+
     const {token} = isAuthenticated();
 
     const { name, email, password, type, acceptBattlesFrom, acceptCyphersFrom, error, success } = values;
@@ -111,7 +127,7 @@ const Profile = ({match}) => {
                 if (data.error){
                     setValues({...values, error: true})
                 } else {
-                    setValues({...values, name: data.name, email: data.email})
+                    setValues({...values, name: `Stan ${Math.floor(Math.random() * 99999)}`, email: data.email})
                 }
             })
     };
@@ -162,7 +178,7 @@ const Profile = ({match}) => {
                     autoFocus
                     style={{ marginBottom: '0' }}
                 />
-                <FormHelperText>What should we call you on this site?</FormHelperText>
+                <FormHelperText>What should we call you on this site? You'll just be another Stan if you don't specify.</FormHelperText>
             </FormControl>
 
             <FormControl variant="outlined" required className={classes.formControl}>
@@ -200,6 +216,7 @@ const Profile = ({match}) => {
                               onChange={handleChange('acceptBattlesFrom')}
                               label="Who can send you rap battle requests?"
                               style={{ color: '#FFFFFF'}}
+                              name={`acceptBattlesFrom`}
                           >
                               <MenuItem value={'disable'}>Disable</MenuItem>
                               <MenuItem value={'spitbosses'}>Vetted Spitboss rappers</MenuItem>
@@ -230,6 +247,35 @@ const Profile = ({match}) => {
       )
     };
 
+    const handleImageChange = (e) => {
+        setAvatarSelected(URL.createObjectURL(e.target.files[0]))
+    }
+
+    // Images
+    const profileUpdateImages = (e) => {
+        return(
+            <>
+                <figure className={classes.avatarPreview}>
+                    <Avatar alt="Avatar" src={`${avatarSelected ? avatarSelected : 'someimage.jpg'}`} />
+                </figure>
+                <input
+                    accept="image/*"
+                    className={classes.upload}
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    onChange={e => handleImageChange(e)}
+                />
+                <label htmlFor="contained-button-file">
+                    <Button variant="contained" color="primary" component="span">
+                        Change Avatar
+                    </Button>
+                </label>
+                <p>You don't have to change your avatar, but if you don't you'll be stuck with the Stanatar.</p>
+            </>
+        )
+    }
+
     useEffect(() => {
         init(match.params.userId);
     }, []);
@@ -247,7 +293,7 @@ const Profile = ({match}) => {
             case 1:
                 return profileUpdateSettings();
             case 2:
-                return 'What is an ad group anyways?';
+                return profileUpdateImages();
             default:
                 return 'Unknown stepIndex';
         }
@@ -271,8 +317,7 @@ const Profile = ({match}) => {
                     </Stepper>
                     {activeStep === steps.length ? (
                         <div style={{ width: '100%'}}>
-                            <Typography className={classes.instructions}>All steps completed</Typography>
-                            <Button onClick={handleReset}>Reset</Button>
+                            <Redirect to="/spitboxes" />;
                         </div>
                     ) : (
                         <>
@@ -288,8 +333,8 @@ const Profile = ({match}) => {
                                     </Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="contained" color="primary" onClick={handleNext}>
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    <Button variant="contained" color="primary" onClick={e => handleNext(e)}>
+                                        {activeStep === steps.length - 1 ? 'Upload' : 'Next'}
                                     </Button>
                                 </Grid>
                             </Grid>

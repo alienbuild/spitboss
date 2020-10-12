@@ -18,7 +18,6 @@ export const read = (userId, token) => {
 
 // Update user profile
 export const update = (userId, token, user) => {
-    console.log('user id is now:', userId);
     return fetch(`${API}/user/${userId}`, {
         method: "PUT",
         headers: {
