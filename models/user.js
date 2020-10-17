@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    activated: {
+        type: Boolean,
+        default: false
+    },
     hashed_password: {
         type: String,
         required: true,

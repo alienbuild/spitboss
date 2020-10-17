@@ -67,6 +67,7 @@ const Signin = () => {
 
     // Init state
     const [open, setOpen] = React.useState(true); // State for snackbox/alerts
+    const [userId, setUserId] = useState();
 
     const [values, setValues] = useState({
         email: '',
@@ -108,6 +109,8 @@ const Signin = () => {
                     dispatch(setAlert(data.error, 'danger'));
                     setValues({...values, loading: false})
                 } else {
+                    console.log('data is: ', data);
+                    setUserId(data.user._id);
                     dispatch(getUser(data));
                     authenticate(data, () => {
                         setValues({...values, redirectToReferrer: true})
@@ -164,7 +167,7 @@ const Signin = () => {
     // Handle redirect on successful login
     const redirectUser = () => {
         if (isAuthenticated()){
-            return <Redirect to="/spitboxes" />;
+            return <Redirect to={`/profile/complete/${userId}`} />;
         }
     };
 

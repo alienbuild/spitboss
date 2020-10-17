@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from "react-router-dom";
 
 // Methods
@@ -12,7 +13,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -21,12 +21,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Avatar from '@material-ui/core/Avatar';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import {ColourShadePicker} from "../utils/ColourShadePicker";
-
 
 const Profile = ({match}) => {
 
@@ -94,7 +89,6 @@ const Profile = ({match}) => {
     const steps = getSteps();
 
     const handleNext = (e) => {
-        console.log('values are: ', values);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -110,6 +104,7 @@ const Profile = ({match}) => {
         type: '',
         acceptBattlesFrom: 'everyone',
         acceptCyphersFrom: 'everyone',
+        acceptMessagesFrom: 'everyone',
         // TODO: Add more as necessary
         error: false,
         success: false
@@ -119,7 +114,7 @@ const Profile = ({match}) => {
 
     const {token} = isAuthenticated();
 
-    const { name, email, password, type, acceptBattlesFrom, acceptCyphersFrom, error, success } = values;
+    const { name, email, password, type, acceptBattlesFrom, acceptCyphersFrom, acceptMessagesFrom, error, success } = values;
 
     const init = (userId) => {
         read(userId, token)
@@ -127,6 +122,13 @@ const Profile = ({match}) => {
                 if (data.error){
                     setValues({...values, error: true})
                 } else {
+                    // Redirect the user if they have already completed their profile.
+                    if (data.complete){
+                        setValues({...values, success: true})
+                    }
+                    if (!data.activated){
+                        //localStorage.setItem('activated', false);
+                    }
                     setValues({...values, name: `Stan ${Math.floor(Math.random() * 99999)}`, email: data.email})
                 }
             })
@@ -137,29 +139,10 @@ const Profile = ({match}) => {
         setValues({ ...values, error: false, [name]: e.target.value })
     };
 
-    const handleSwitch = name => e => {
-        setValues({ ...values, error: false, [name]: e.target.checked })
-    }
-
-    // Handle submit
-    const clickSubmit = (e) => {
-        e.preventDefault();
-        update(match.params.userId, token, {name, email, password})
-            .then(data => {
-                if(data.error){
-                    console.log(data.error);
-                } else {
-                    updateUser(data, () => {
-                        setValues({...values, name: data.name, email: data.email, success: true})
-                    })
-                }
-            })
-    };
-
     // Redirect
     const redirectUser = (success) => {
         if(success){
-            return <Redirect to={'/'} />
+            return <Redirect to="/spitboxes" />;
         }
     };
 
@@ -208,6 +191,21 @@ const Profile = ({match}) => {
               {type === 'mc' ? (
                   <>
                       <FormControl variant="outlined" required className={classes.formControl}>
+                          <InputLabel id="accept-messages-from">Who can message you?</InputLabel>
+                          <Select
+                              labelId="accept-messages-from"
+                              id="accept-messages-from"
+                              value={acceptMessagesFrom}
+                              onChange={handleChange('acceptMessagesFrom')}
+                              label="Who can message you?"
+                              style={{ color: '#FFFFFF'}}
+                          >
+                              <MenuItem value={'spitbosses'}>Only Spitbosses</MenuItem>
+                              <MenuItem value={'everyone'}>Everyone</MenuItem>
+                          </Select>
+                      </FormControl>
+
+                      <FormControl variant="outlined" required className={classes.formControl}>
                           <InputLabel id="accept-battles-from">Who can send you rap battle requests?</InputLabel>
                           <Select
                               labelId="accept-battles-from"
@@ -222,7 +220,6 @@ const Profile = ({match}) => {
                               <MenuItem value={'spitbosses'}>Vetted Spitboss rappers</MenuItem>
                               <MenuItem value={'everyone'}>Everyone</MenuItem>
                           </Select>
-                          <FormHelperText>You control who can send you battle rap requests.</FormHelperText>
                       </FormControl>
 
                       <FormControl variant="outlined" required className={classes.formControl}>
@@ -239,8 +236,8 @@ const Profile = ({match}) => {
                               <MenuItem value={'spitbosses'}>Vetted Spitboss rappers</MenuItem>
                               <MenuItem value={'everyone'}>Everyone</MenuItem>
                           </Select>
-                          <FormHelperText>You control who can send you cypher event requests.</FormHelperText>
                       </FormControl>
+
                   </>
               ) : null}
           </>
@@ -299,6 +296,27 @@ const Profile = ({match}) => {
         }
     }
 
+    const handleFinish = () => {
+        update(match.params.userId, token,
+            {
+                name,
+                type,
+                acceptBattlesFrom,
+                acceptCyphersFrom,
+                acceptMessagesFrom,
+                complete: true
+            })
+            .then(data => {
+                if(data.error){
+                    console.log(data.error);
+                } else {
+                    updateUser(data, () => {
+                        setValues({...values, success: true })
+                    })
+                }
+            })
+    }
+
     return(
         <Container component="main" maxWidth="xs">
             <Grid
@@ -315,11 +333,7 @@ const Profile = ({match}) => {
                             </Step>
                         ))}
                     </Stepper>
-                    {activeStep === steps.length ? (
-                        <div style={{ width: '100%'}}>
-                            <Redirect to="/spitboxes" />;
-                        </div>
-                    ) : (
+                    {activeStep === steps.length ? handleFinish() : (
                         <>
                             {getStepContent(activeStep)}
                             <Grid container>
