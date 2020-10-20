@@ -122,7 +122,7 @@ const SpitboxTemplate = ({children, socket, spitboxId, setMessages}) => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href={`/spitbox/spitboxes`}>
+                                    <a href={`/spitboxes`}>
                                         <lord-icon
                                             animation="loop"
                                             palette="#ffffff;#fecb47"

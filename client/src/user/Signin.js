@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -65,6 +65,18 @@ const Signin = () => {
     const dispatch = useDispatch();
     const alerts = useSelector(state => state.alerts);
 
+    // Check if the user is already logged in
+    const exisitingUserId = useSelector(state => state.user.user.user._id);
+
+    useEffect(() => {
+        if (userId){
+            setUserId(userId);
+        }
+        if (exisitingUserId){
+            setUserId(exisitingUserId);
+        }
+    },[]);
+
     // Init state
     const [open, setOpen] = React.useState(true); // State for snackbox/alerts
     const [userId, setUserId] = useState();
@@ -109,7 +121,6 @@ const Signin = () => {
                     dispatch(setAlert(data.error, 'danger'));
                     setValues({...values, loading: false})
                 } else {
-                    console.log('data is: ', data);
                     setUserId(data.user._id);
                     dispatch(getUser(data));
                     authenticate(data, () => {
@@ -167,7 +178,7 @@ const Signin = () => {
     // Handle redirect on successful login
     const redirectUser = () => {
         if (isAuthenticated()){
-            return <Redirect to={`/profile/complete/${userId}`} />;
+           return <Redirect to={`/profile/complete/${user._id}`} />;
         }
     };
 

@@ -123,6 +123,7 @@ const Profile = ({match}) => {
                     setValues({...values, error: true})
                 } else {
                     // Redirect the user if they have already completed their profile.
+                    console.log('ok data is: ', data);
                     if (data.complete){
                         setValues({...values, success: true})
                     }
